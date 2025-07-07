@@ -1,4 +1,4 @@
-# Sierra SDK for PHP
+# Sierra SDK for PHP (Unofficial)
 
 A modern PHP SDK for the Sierra ILS API platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration.
 
@@ -68,24 +68,21 @@ You must provide:
 
 - **Client** – main entry point, wraps Saloon connector
 - **Requests** – one Saloon Request per endpoint (e.g., GetBibRecordRequest)
-- **Data** – Laravel Data DTOs for API responses
+- **Data** – Data DTOs for API responses
 - **Exceptions** – custom exceptions for API and response errors
 - **Tests** – PHPUnit test coverage (coming soon)
 
 ## Roadmap
 
 - [x] Basic client and authentication
-- [x] Fetch single bib record
-- [x] Search bib index
-- [ ] Handle pagination
-- [ ] Add support for Items, Patrons, etc.
-- [ ] Improve error handling and response caching
+- [] List bit reords
+- [] Fetch single bib record
+- [] Search bib index
 
 ## Requirements
 
 - PHP 8.4+
 - Composer
-- Laravel Data (installed automatically)
 - Saloon (installed automatically)
 
 ## Contributing
