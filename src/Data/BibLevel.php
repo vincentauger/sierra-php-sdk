@@ -18,6 +18,8 @@ final readonly class BibLevel
 
     /**
      * Create a BibLevel from Sierra API response data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -29,6 +31,8 @@ final readonly class BibLevel
 
     /**
      * Convert the BibLevel to an array
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

@@ -31,7 +31,9 @@ final readonly class BibObject
         public ?string $publishYear = null,
         public ?string $catalogDate = null,
         public ?string $country = null,
+        /** @var array<string>|null */
         public ?array $normTitle = null,
+        /** @var array<string>|null */
         public ?array $normAuthor = null,
         /** @var Order[]|null */
         public ?array $orders = null,
@@ -48,29 +50,45 @@ final readonly class BibObject
         public ?string $campus = null,
         /** @var Uri[]|null */
         public ?array $uris = null,
+        /** @var array<string>|null */
         public ?array $isbn = null,
+        /** @var array<string>|null */
         public ?array $issn = null,
+        /** @var array<string>|null */
         public ?array $oclc = null,
+        /** @var array<string>|null */
         public ?array $lccn = null,
+        /** @var array<string>|null */
         public ?array $subjects = null,
+        /** @var array<string>|null */
         public ?array $genres = null,
+        /** @var array<string>|null */
         public ?array $notes = null,
+        /** @var array<string>|null */
         public ?array $seriesStatement = null,
         public ?string $edition = null,
         public ?string $imprint = null,
         public ?string $physicalDescription = null,
+        /** @var array<string>|null */
         public ?array $contents = null,
+        /** @var array<string>|null */
         public ?array $summary = null,
         public ?string $audience = null,
         public ?string $classification = null,
+        /** @var array<string>|null */
         public ?array $alternativeTitles = null,
+        /** @var array<string>|null */
         public ?array $relatedWorks = null,
+        /** @var array<mixed>|null */
         public ?array $electronicResources = null,
+        /** @var array<mixed>|null */
         public ?array $customFields = null,
     ) {}
 
     /**
      * Create a BibObject from Sierra API response data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -93,19 +111,19 @@ final readonly class BibObject
             normTitle: $data['normTitle'] ?? null,
             normAuthor: $data['normAuthor'] ?? null,
             orders: isset($data['orders']) ? array_map(
-                fn (array $order) => Order::fromArray($order),
+                fn (array $order): \VincentAuger\SierraSdk\Data\Order => Order::fromArray($order),
                 $data['orders']
             ) : null,
             varFields: isset($data['varFields']) ? array_map(
-                fn (array $varField) => VarField::fromArray($varField),
+                fn (array $varField): \VincentAuger\SierraSdk\Data\VarField => VarField::fromArray($varField),
                 $data['varFields']
             ) : null,
             fixedFields: isset($data['fixedFields']) ? array_map(
-                fn (array $fixedField) => FixedField::fromArray($fixedField),
+                fn (array $fixedField): \VincentAuger\SierraSdk\Data\FixedField => FixedField::fromArray($fixedField),
                 $data['fixedFields']
             ) : null,
             locations: isset($data['locations']) ? array_map(
-                fn (array $location) => Location::fromArray($location),
+                fn (array $location): \VincentAuger\SierraSdk\Data\Location => Location::fromArray($location),
                 $data['locations']
             ) : null,
             holdCount: $data['holdCount'] ?? null,
@@ -114,7 +132,7 @@ final readonly class BibObject
             recordNumber: $data['recordNumber'] ?? null,
             campus: $data['campus'] ?? null,
             uris: isset($data['uris']) ? array_map(
-                fn (array $uri) => Uri::fromArray($uri),
+                fn (array $uri): \VincentAuger\SierraSdk\Data\Uri => Uri::fromArray($uri),
                 $data['uris']
             ) : null,
             isbn: $data['isbn'] ?? null,
@@ -141,6 +159,8 @@ final readonly class BibObject
 
     /**
      * Convert the BibObject to an array
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -162,20 +182,20 @@ final readonly class BibObject
             'country' => $this->country,
             'normTitle' => $this->normTitle,
             'normAuthor' => $this->normAuthor,
-            'orders' => $this->orders ? array_map(
-                fn (Order $order) => $order->toArray(),
+            'orders' => $this->orders !== null && $this->orders !== [] ? array_map(
+                fn (Order $order): array => $order->toArray(),
                 $this->orders
             ) : null,
-            'varFields' => $this->varFields ? array_map(
-                fn (VarField $varField) => $varField->toArray(),
+            'varFields' => $this->varFields !== null && $this->varFields !== [] ? array_map(
+                fn (VarField $varField): array => $varField->toArray(),
                 $this->varFields
             ) : null,
-            'fixedFields' => $this->fixedFields ? array_map(
-                fn (FixedField $fixedField) => $fixedField->toArray(),
+            'fixedFields' => $this->fixedFields !== null && $this->fixedFields !== [] ? array_map(
+                fn (FixedField $fixedField): array => $fixedField->toArray(),
                 $this->fixedFields
             ) : null,
-            'locations' => $this->locations ? array_map(
-                fn (Location $location) => $location->toArray(),
+            'locations' => $this->locations !== null && $this->locations !== [] ? array_map(
+                fn (Location $location): array => $location->toArray(),
                 $this->locations
             ) : null,
             'holdCount' => $this->holdCount,
@@ -183,8 +203,8 @@ final readonly class BibObject
             'recordType' => $this->recordType,
             'recordNumber' => $this->recordNumber,
             'campus' => $this->campus,
-            'uris' => $this->uris ? array_map(
-                fn (Uri $uri) => $uri->toArray(),
+            'uris' => $this->uris !== null && $this->uris !== [] ? array_map(
+                fn (Uri $uri): array => $uri->toArray(),
                 $this->uris
             ) : null,
             'isbn' => $this->isbn,
@@ -226,7 +246,7 @@ final readonly class BibObject
      */
     public function isDeleted(): bool
     {
-        return $this->deleted === true || $this->deletedDate !== null;
+        return $this->deleted === true || $this->deletedDate instanceof \DateTimeImmutable;
     }
 
     /**
@@ -258,7 +278,7 @@ final readonly class BibObject
      */
     public function getIsbnString(): ?string
     {
-        if ($this->isbn === null || empty($this->isbn)) {
+        if ($this->isbn === null || $this->isbn === []) {
             return null;
         }
 
@@ -270,7 +290,7 @@ final readonly class BibObject
      */
     public function getIssnString(): ?string
     {
-        if ($this->issn === null || empty($this->issn)) {
+        if ($this->issn === null || $this->issn === []) {
             return null;
         }
 
@@ -297,6 +317,8 @@ final readonly class BibObject
 
     /**
      * Get all VarFields by MARC tag
+     *
+     * @return VarField[]
      */
     public function getVarFieldsByTag(string $tag): array
     {
@@ -306,7 +328,7 @@ final readonly class BibObject
 
         return array_filter(
             $this->varFields,
-            fn (VarField $varField) => $varField->marcTag === $tag || $varField->fieldTag === $tag
+            fn (VarField $varField): bool => $varField->marcTag === $tag || $varField->fieldTag === $tag
         );
     }
 
@@ -330,6 +352,8 @@ final readonly class BibObject
 
     /**
      * Get all active orders
+     *
+     * @return Order[]
      */
     public function getActiveOrders(): array
     {
@@ -339,12 +363,14 @@ final readonly class BibObject
 
         return array_filter(
             $this->orders,
-            fn (Order $order) => $order->status !== 'cancelled' && $order->status !== 'received'
+            fn (Order $order): bool => $order->status !== 'cancelled' && $order->status !== 'received'
         );
     }
 
     /**
      * Get all URIs
+     *
+     * @return Uri[]
      */
     public function getUris(): array
     {
@@ -356,7 +382,7 @@ final readonly class BibObject
      */
     public function getPrimaryLocation(): ?Location
     {
-        if ($this->locations === null || empty($this->locations)) {
+        if ($this->locations === null || $this->locations === []) {
             return null;
         }
 

@@ -29,6 +29,8 @@ final readonly class Order
 
     /**
      * Create an Order from Sierra API response data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -49,6 +51,8 @@ final readonly class Order
 
     /**
      * Convert the Order to an array
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

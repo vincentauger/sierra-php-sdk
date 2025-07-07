@@ -33,20 +33,31 @@ class BaseTest extends TestCase
     public function getAuthenticator(): Authenticator
     {
 
-        if ($this->authenticator) {
+        if ($this->authenticator instanceof \Saloon\Contracts\Authenticator) {
             return $this->authenticator;
         }
 
+        $sierra = $this->getClient();
+
+        return $sierra->getAccessToken();
+    }
+
+    /**
+     * Get a configured Sierra client instance.
+     *
+     * This method retrieves the client key, secret, and base URL from environment variables,
+     * then creates and returns a new instance of the Sierra SDK.
+     */
+    public function getClient(): \VincentAuger\SierraSdk\Sierra
+    {
         $key = $_ENV['SIERRA_CLIENT_KEY'];
         $secret = $_ENV['SIERRA_CLIENT_SECRET'];
         $baseUrl = $_ENV['SIERRA_API_URL'];
 
-        $sierra = new \VincentAuger\SierraSdk\Sierra(
+        return new \VincentAuger\SierraSdk\Sierra(
             baseUrl: $baseUrl,
             clientKey: $key,
             clientSecret: $secret
         );
-
-        return $sierra->getAccessToken();
     }
 }

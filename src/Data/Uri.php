@@ -19,6 +19,8 @@ final readonly class Uri
 
     /**
      * Create a Uri from Sierra API response data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -31,6 +33,8 @@ final readonly class Uri
 
     /**
      * Convert the Uri to an array
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

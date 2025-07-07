@@ -18,6 +18,8 @@ final readonly class MaterialType
 
     /**
      * Create a MaterialType from Sierra API response data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -29,6 +31,8 @@ final readonly class MaterialType
 
     /**
      * Convert the MaterialType to an array
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

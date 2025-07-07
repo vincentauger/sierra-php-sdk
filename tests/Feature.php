@@ -1,5 +1,7 @@
 <?php
 
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
 use VincentAuger\SierraSdk\Requests\Bib\GetList;
 
 /**
@@ -25,26 +27,29 @@ it('can get a token from the API', function (): void {
     expect($authenticator->getExpiresAt())->toBeInstanceOf(DateTimeImmutable::class);
     expect($authenticator->hasExpired())->toBeFalse();
 
-}); // ->skip('This test hits the real API and requires valid credentials.');
+})->skip('This test hits the real API and requires valid credentials.');
 
-// it('can get a list of bibs', function (): void {
+it('can get a list of bibs', function (): void {
 
-//     $authenticator = $this->getAuthenticator();
+    $mockClient = new MockClient([
+        GetList::class => MockResponse::fixture('getlist'),
+    ]);
 
-//     $sierra = new \VincentAuger\SierraSdk\Sierra(
-//         baseUrl: $_ENV[ 'SIERRA_API_URL' ],
-//         clientKey: $_ENV[ 'SIERRA_CLIENT_KEY' ],
-//         clientSecret: $_ENV[ 'SIERRA_CLIENT_SECRET' ]
-//     );
+    $sierra = $this->getClient();
 
-//     $sierra->authenticate($authenticator);
+    $sierra->withMockClient($mockClient);
 
-//     $response = $sierra->send(new GetList);
+    // If you want to test against the real API, uncomment the following lines
+    // and delete the json response fixture.
+    // $authenticator = $this->getAuthenticator();
+    // $sierra->authenticate($authenticator);
 
-//     dd($response->json());
+    $response = $sierra->send(new GetList);
 
-//     expect($response->status())->toBe(200);
-//     expect($response->json())->toBeArray();
-//     expect($response->json())->toHaveKey('bibs');
+    // dd($response->json());
 
-// });
+    expect($response->status())->toBe(200);
+    expect($response->json())->toBeArray();
+    expect($response->json())->toHaveKey('entries');
+
+});

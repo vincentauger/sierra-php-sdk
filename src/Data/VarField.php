@@ -35,7 +35,7 @@ final readonly class VarField
             ind2: $data['ind2'] ?? null,
             content: $data['content'] ?? null,
             subfields: isset($data['subfields']) ? array_map(
-                fn (array $subfield) => Subfield::fromArray($subfield),
+                fn (array $subfield): \VincentAuger\SierraSdk\Data\Subfield => Subfield::fromArray($subfield),
                 $data['subfields']
             ) : null,
         );
@@ -54,8 +54,8 @@ final readonly class VarField
             'ind1' => $this->ind1,
             'ind2' => $this->ind2,
             'content' => $this->content,
-            'subfields' => $this->subfields ? array_map(
-                fn (Subfield $subfield) => $subfield->toArray(),
+            'subfields' => $this->subfields !== null && $this->subfields !== [] ? array_map(
+                fn (Subfield $subfield): array => $subfield->toArray(),
                 $this->subfields
             ) : null,
         ];
@@ -75,7 +75,7 @@ final readonly class VarField
         }
 
         return implode(' ', array_map(
-            fn (Subfield $subfield) => $subfield->content,
+            fn (Subfield $subfield): string => $subfield->content,
             $this->subfields
         ));
     }
@@ -111,7 +111,7 @@ final readonly class VarField
 
         return array_filter(
             $this->subfields,
-            fn (Subfield $subfield) => $subfield->tag === $code
+            fn (Subfield $subfield): bool => $subfield->tag === $code
         );
     }
 }

@@ -42,7 +42,7 @@ class Sierra extends Connector
         $config->setClientId($this->clientKey);
         $config->setClientSecret($this->clientSecret);
         $config->setTokenEndpoint('/token');
-        $config->setRequestModifier(function (Request $request) {
+        $config->setRequestModifier(function (Request $request): void {
             // we need Basic authentication for the token endpoint
             $request->headers()->add('Authorization', 'Basic '.base64_encode($this->clientKey.':'.$this->clientSecret));
         });
