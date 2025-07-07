@@ -1,6 +1,6 @@
 # Sierra SDK for PHP (Unofficial)
 
-A modern PHP SDK for the Sierra ILS API platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration.
+A modern PHP SDK for the Sierra ILS API (v6) platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration.
 
 > **Current Status:** Focused on the **Bibliographic API (Bib API)**. Designed for future expansion to other Sierra endpoints.
 
@@ -75,9 +75,9 @@ You must provide:
 ## Roadmap
 
 - [x] Basic client and authentication
-- [] List bit reords
-- [] Fetch single bib record
-- [] Search bib index
+- [ ] List bit reords
+- [ ] Fetch single bib record
+- [ ] Search bib index
 
 ## Requirements
 
