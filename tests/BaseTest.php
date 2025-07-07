@@ -4,11 +4,9 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Contracts\Authenticator;
-use Saloon\Http\Auth\TokenAuthenticator;
 
 class BaseTest extends TestCase
 {
-
     private ?Authenticator $authenticator = null;
 
     protected function setUp(): void
@@ -16,7 +14,7 @@ class BaseTest extends TestCase
         parent::setUp();
 
         // load environment variables for testing against the real API
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../');
         $dotenv->load();
 
     }
@@ -31,8 +29,6 @@ class BaseTest extends TestCase
      *
      * This method retrieves the client key, secret, and base URL from environment variables,
      * then creates a new instance of the Sierra SDK and returns its access token authenticator.
-     *
-     * @return Authenticator
      */
     public function getAuthenticator(): Authenticator
     {
@@ -53,8 +49,4 @@ class BaseTest extends TestCase
 
         return $sierra->getAccessToken();
     }
-
-
-
-
 }

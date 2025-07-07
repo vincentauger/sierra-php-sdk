@@ -67,8 +67,7 @@ final readonly class BibObject
         public ?array $relatedWorks = null,
         public ?array $electronicResources = null,
         public ?array $customFields = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a BibObject from Sierra API response data
@@ -94,19 +93,19 @@ final readonly class BibObject
             normTitle: $data['normTitle'] ?? null,
             normAuthor: $data['normAuthor'] ?? null,
             orders: isset($data['orders']) ? array_map(
-                fn(array $order) => Order::fromArray($order),
+                fn (array $order) => Order::fromArray($order),
                 $data['orders']
             ) : null,
             varFields: isset($data['varFields']) ? array_map(
-                fn(array $varField) => VarField::fromArray($varField),
+                fn (array $varField) => VarField::fromArray($varField),
                 $data['varFields']
             ) : null,
             fixedFields: isset($data['fixedFields']) ? array_map(
-                fn(array $fixedField) => FixedField::fromArray($fixedField),
+                fn (array $fixedField) => FixedField::fromArray($fixedField),
                 $data['fixedFields']
             ) : null,
             locations: isset($data['locations']) ? array_map(
-                fn(array $location) => Location::fromArray($location),
+                fn (array $location) => Location::fromArray($location),
                 $data['locations']
             ) : null,
             holdCount: $data['holdCount'] ?? null,
@@ -115,7 +114,7 @@ final readonly class BibObject
             recordNumber: $data['recordNumber'] ?? null,
             campus: $data['campus'] ?? null,
             uris: isset($data['uris']) ? array_map(
-                fn(array $uri) => Uri::fromArray($uri),
+                fn (array $uri) => Uri::fromArray($uri),
                 $data['uris']
             ) : null,
             isbn: $data['isbn'] ?? null,
@@ -164,19 +163,19 @@ final readonly class BibObject
             'normTitle' => $this->normTitle,
             'normAuthor' => $this->normAuthor,
             'orders' => $this->orders ? array_map(
-                fn(Order $order) => $order->toArray(),
+                fn (Order $order) => $order->toArray(),
                 $this->orders
             ) : null,
             'varFields' => $this->varFields ? array_map(
-                fn(VarField $varField) => $varField->toArray(),
+                fn (VarField $varField) => $varField->toArray(),
                 $this->varFields
             ) : null,
             'fixedFields' => $this->fixedFields ? array_map(
-                fn(FixedField $fixedField) => $fixedField->toArray(),
+                fn (FixedField $fixedField) => $fixedField->toArray(),
                 $this->fixedFields
             ) : null,
             'locations' => $this->locations ? array_map(
-                fn(Location $location) => $location->toArray(),
+                fn (Location $location) => $location->toArray(),
                 $this->locations
             ) : null,
             'holdCount' => $this->holdCount,
@@ -185,7 +184,7 @@ final readonly class BibObject
             'recordNumber' => $this->recordNumber,
             'campus' => $this->campus,
             'uris' => $this->uris ? array_map(
-                fn(Uri $uri) => $uri->toArray(),
+                fn (Uri $uri) => $uri->toArray(),
                 $this->uris
             ) : null,
             'isbn' => $this->isbn,
@@ -219,7 +218,7 @@ final readonly class BibObject
             return null;
         }
 
-        return rtrim($baseUrl, '/') . '/bibs/' . $this->id;
+        return rtrim($baseUrl, '/').'/bibs/'.$this->id;
     }
 
     /**
@@ -307,7 +306,7 @@ final readonly class BibObject
 
         return array_filter(
             $this->varFields,
-            fn(VarField $varField) => $varField->marcTag === $tag || $varField->fieldTag === $tag
+            fn (VarField $varField) => $varField->marcTag === $tag || $varField->fieldTag === $tag
         );
     }
 
@@ -340,7 +339,7 @@ final readonly class BibObject
 
         return array_filter(
             $this->orders,
-            fn(Order $order) => $order->status !== 'cancelled' && $order->status !== 'received'
+            fn (Order $order) => $order->status !== 'cancelled' && $order->status !== 'received'
         );
     }
 

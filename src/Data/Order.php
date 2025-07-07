@@ -25,8 +25,7 @@ final readonly class Order
         public ?string $location = null,
         public ?string $orderType = null,
         public ?string $note = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create an Order from Sierra API response data

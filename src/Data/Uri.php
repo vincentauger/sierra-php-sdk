@@ -15,8 +15,7 @@ final readonly class Uri
         public string $url,
         public ?string $label = null,
         public ?string $note = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a Uri from Sierra API response data

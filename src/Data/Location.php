@@ -14,8 +14,7 @@ final readonly class Location
     public function __construct(
         public string $code,
         public string $name,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a Location from Sierra API response data

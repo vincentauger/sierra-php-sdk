@@ -14,8 +14,7 @@ final readonly class Lang
     public function __construct(
         public string $code,
         public ?string $name = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a Lang from Sierra API response data

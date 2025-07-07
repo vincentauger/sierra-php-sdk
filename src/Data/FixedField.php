@@ -15,8 +15,7 @@ final readonly class FixedField
         public string $label,
         public string $value,
         public ?string $display = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a FixedField from Sierra API response data

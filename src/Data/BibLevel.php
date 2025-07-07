@@ -14,8 +14,7 @@ final readonly class BibLevel
     public function __construct(
         public string $code,
         public ?string $value = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a BibLevel from Sierra API response data

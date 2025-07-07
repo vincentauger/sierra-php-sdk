@@ -14,8 +14,7 @@ final readonly class Subfield
     public function __construct(
         public string $tag,
         public string $content,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a Subfield from Sierra API response data

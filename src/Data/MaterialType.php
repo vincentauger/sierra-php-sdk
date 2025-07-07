@@ -14,8 +14,7 @@ final readonly class MaterialType
     public function __construct(
         public string $code,
         public ?string $value = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a MaterialType from Sierra API response data

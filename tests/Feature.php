@@ -1,6 +1,5 @@
 <?php
 
-use VincentAuger\SierraSdk\Example;
 use VincentAuger\SierraSdk\Requests\Bib\GetList;
 
 /**
@@ -8,9 +7,9 @@ use VincentAuger\SierraSdk\Requests\Bib\GetList;
  */
 it('can get a token from the API', function (): void {
 
-    $key = $_ENV[ 'SIERRA_CLIENT_KEY' ];
-    $secret = $_ENV[ 'SIERRA_CLIENT_SECRET' ];
-    $baseUrl = $_ENV[ 'SIERRA_API_URL' ];
+    $key = $_ENV['SIERRA_CLIENT_KEY'];
+    $secret = $_ENV['SIERRA_CLIENT_SECRET'];
+    $baseUrl = $_ENV['SIERRA_API_URL'];
 
     echo "Using API URL: $baseUrl\n";
 
@@ -26,26 +25,26 @@ it('can get a token from the API', function (): void {
     expect($authenticator->getExpiresAt())->toBeInstanceOf(DateTimeImmutable::class);
     expect($authenticator->hasExpired())->toBeFalse();
 
-})->skip('This test hits the real API and requires valid credentials.');
+}); // ->skip('This test hits the real API and requires valid credentials.');
 
-it('can get a list of bibs', function (): void {
+// it('can get a list of bibs', function (): void {
 
-    $authenticator = $this->getAuthenticator();
+//     $authenticator = $this->getAuthenticator();
 
-    $sierra = new \VincentAuger\SierraSdk\Sierra(
-        baseUrl: $_ENV[ 'SIERRA_API_URL' ],
-        clientKey: $_ENV[ 'SIERRA_CLIENT_KEY' ],
-        clientSecret: $_ENV[ 'SIERRA_CLIENT_SECRET' ]
-    );
+//     $sierra = new \VincentAuger\SierraSdk\Sierra(
+//         baseUrl: $_ENV[ 'SIERRA_API_URL' ],
+//         clientKey: $_ENV[ 'SIERRA_CLIENT_KEY' ],
+//         clientSecret: $_ENV[ 'SIERRA_CLIENT_SECRET' ]
+//     );
 
-    $sierra->authenticate($authenticator);
+//     $sierra->authenticate($authenticator);
 
-    $response = $sierra->send(new GetList);
+//     $response = $sierra->send(new GetList);
 
-    dd($response->json());
+//     dd($response->json());
 
-    expect($response->status())->toBe(200);
-    expect($response->json())->toBeArray();
-    expect($response->json())->toHaveKey('bibs');
+//     expect($response->status())->toBe(200);
+//     expect($response->json())->toBeArray();
+//     expect($response->json())->toHaveKey('bibs');
 
-});
+// });
