@@ -17,8 +17,7 @@
     ],
     "require": {
         "php": "^8.4.0",
-        "saloonphp/saloon": "^3.0",
-        "spatie/laravel-data": "^4.17"
+        "saloonphp/saloon": "^3.0"
     },
     "require-dev": {
         "laravel/pint": "^1.22.1",
@@ -27,7 +26,8 @@
         "pestphp/pest-plugin-type-coverage": "^4.0.0",
         "phpstan/phpstan": "^2.1.16",
         "rector/rector": "^2.0.16",
-        "symfony/var-dumper": "^7.2.6"
+        "symfony/var-dumper": "^7.2.6",
+        "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
         "psr-4": {
@@ -52,6 +52,7 @@
         "lint": "pint",
         "refactor": "rector",
         "test:lint": "pint --test",
+        "test:unit": "pest",
         "test:types": "phpstan",
         "test:refactor": "rector --dry-run",
         "test": [

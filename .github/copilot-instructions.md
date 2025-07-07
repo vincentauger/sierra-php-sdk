@@ -15,9 +15,7 @@
 - Enums: `VincentAuger\SierraSdk\Enums`
 
 ## Class Requirements
-- DTOs extend `Spatie\LaravelData\Data`
 - DTOs are `final readonly`
 - Requests extend `Saloon\Http\Request`
 - Requests are `final`
 - Enums are backed enums with string or int values
-- Sierra API endpoints use `/v6/` prefix

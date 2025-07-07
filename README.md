@@ -1,6 +1,6 @@
 # Sierra SDK for PHP
 
-A modern PHP SDK for the Sierra ILS API platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration and [Laravel Data](https://spatie.be/docs/laravel-data) for data transfer objects (DTOs).
+A modern PHP SDK for the Sierra ILS API platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration.
 
 > **Current Status:** Focused on the **Bibliographic API (Bib API)**. Designed for future expansion to other Sierra endpoints.
 
@@ -10,7 +10,6 @@ A modern PHP SDK for the Sierra ILS API platform, built for maintainability and 
 
 - ✅ PHP 8.4+ with modern syntax (typed properties, readonly, enums, attributes)
 - ✅ Clean HTTP layer built on [Saloon](https://docs.saloon.dev)
-- ✅ Typed, immutable DTOs using [Laravel Data](https://spatie.be/docs/laravel-data)
 - ✅ PSR-4 autoloading and testable structure
 - ✅ Composer-native and framework-agnostic
 
