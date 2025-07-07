@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VincentAuger\SierraSdk;
 
 use Saloon\Helpers\OAuth2\OAuthConfig;
@@ -7,7 +9,7 @@ use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Traits\OAuth2\ClientCredentialsGrant;
 
-class Sierra extends Connector
+final class Sierra extends Connector
 {
     use ClientCredentialsGrant;
 
@@ -18,9 +20,9 @@ class Sierra extends Connector
      * @return void
      */
     public function __construct(
-        protected string $baseUrl,
-        protected string $clientKey,
-        protected string $clientSecret,
+        private string $baseUrl,
+        private string $clientKey,
+        private string $clientSecret,
     ) {}
 
     /**

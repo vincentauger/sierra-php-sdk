@@ -4,18 +4,29 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Contracts\Authenticator;
+use VincentAuger\SierraSdk\Sierra;
 
 class BaseTest extends TestCase
 {
     private ?Authenticator $authenticator = null;
 
-    protected function setUp(): void
+    private ?Sierra $sierra = null;
+
+    public static function setUpBeforeClass(): void
     {
-        parent::setUp();
+        parent::setUpBeforeClass();
+
+        // check if the .env file exists and load it
+        $envExists = file_exists(__DIR__.'/../.env');
 
         // load environment variables for testing against the real API
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../');
-        $dotenv->load();
+        if ($envExists) {
+            $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.'/../');
+            $dotenv->load();
+            echo "Loaded .env file\n";
+        } else {
+            echo "Skipped .env loading\n";
+        }
 
     }
 
@@ -50,14 +61,21 @@ class BaseTest extends TestCase
      */
     public function getClient(): \VincentAuger\SierraSdk\Sierra
     {
-        $key = $_ENV['SIERRA_CLIENT_KEY'];
-        $secret = $_ENV['SIERRA_CLIENT_SECRET'];
-        $baseUrl = $_ENV['SIERRA_API_URL'];
 
-        return new \VincentAuger\SierraSdk\Sierra(
+        if ($this->sierra instanceof \VincentAuger\SierraSdk\Sierra) {
+            return $this->sierra;
+        }
+
+        $key = $_ENV['SIERRA_CLIENT_KEY'] ?? 'your-client-key';
+        $secret = $_ENV['SIERRA_CLIENT_SECRET'] ?? 'your-client-secret';
+        $baseUrl = $_ENV['SIERRA_API_URL'] ?? 'https://api.example.com';
+
+        $this->sierra = new \VincentAuger\SierraSdk\Sierra(
             baseUrl: $baseUrl,
             clientKey: $key,
             clientSecret: $secret
         );
+
+        return $this->sierra;
     }
 }

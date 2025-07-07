@@ -16,9 +16,9 @@ it('can get a token from the API', function (): void {
     echo "Using API URL: $baseUrl\n";
 
     $sierra = new \VincentAuger\SierraSdk\Sierra(
-        baseUrl: $baseUrl,
-        clientKey: $key,
-        clientSecret: $secret
+        baseUrl: $baseUrl ?? 'https://api.example.com',
+        clientKey: $key ?? 'your-client',
+        clientSecret: $secret ?? 'your-client-secret'
     );
 
     $authenticator = $sierra->getAccessToken();
@@ -44,9 +44,7 @@ it('can get a list of bibs', function (): void {
     // $authenticator = $this->getAuthenticator();
     // $sierra->authenticate($authenticator);
 
-    $response = $sierra->send(new GetList);
-
-    // dd($response->json());
+    $response = $sierra->send(new GetList()->deleted(false));
 
     expect($response->status())->toBe(200);
     expect($response->json())->toBeArray();
