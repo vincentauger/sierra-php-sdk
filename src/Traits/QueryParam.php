@@ -45,8 +45,8 @@ trait QueryParam
             throw new \InvalidArgumentException("At least one of start or end date must be provided for {$parameter} range filtering");
         }
 
-        $start = $startDate instanceof \DateTime ? $startDate->format('Y-m-d\TH:i:s\Z') : '';
-        $end = $endDate instanceof \DateTime ? $endDate->format('Y-m-d\TH:i:s\Z') : '';
+        $start = $startDate instanceof \DateTime ? $this->formatDateForSierra($startDate) : '';
+        $end = $endDate instanceof \DateTime ? $this->formatDateForSierra($endDate) : '';
 
         $range = sprintf('[%s,%s]', $start, $end);
         $this->query()->add($parameter, $range);
@@ -62,7 +62,7 @@ trait QueryParam
      */
     protected function addDateParam(string $parameter, \DateTime $date): self
     {
-        $this->query()->add($parameter, $date->format('Y-m-d\TH:i:s\Z'));
+        $this->query()->add($parameter, $this->formatDateForSierra($date));
 
         return $this;
     }
@@ -100,5 +100,15 @@ trait QueryParam
         $this->query()->add('id', implode(',', $ids));
 
         return $this;
+    }
+
+    /**
+     * Format a DateTime object for the Sierra API.
+     *
+     * @param  \DateTime  $date  The date to format
+     */
+    protected function formatDateForSierra(\DateTime $date): string
+    {
+        return $date->format('Y-m-d\TH:i:s\Z');
     }
 }

@@ -6,13 +6,14 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Contracts\Authenticator;
+use Saloon\Http\Faking\MockClient;
 use VincentAuger\SierraSdk\Sierra;
 
 class BaseTest extends TestCase
 {
-    private ?Authenticator $authenticator = null;
+    private static ?Authenticator $authenticator = null;
 
-    private ?Sierra $sierra = null;
+    private static ?Sierra $sierra = null;
 
     public static function setUpBeforeClass(): void
     {
@@ -32,52 +33,57 @@ class BaseTest extends TestCase
 
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        MockClient::destroyGlobal();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
     }
 
     /**
-     * Get an Authenticator instance for the Sierra API.
-     *
-     * This method retrieves the client key, secret, and base URL from environment variables,
-     * then creates a new instance of the Sierra SDK and returns its access token authenticator.
-     */
-    public function getAuthenticator(): Authenticator
-    {
-
-        if ($this->authenticator instanceof \Saloon\Contracts\Authenticator) {
-            return $this->authenticator;
-        }
-
-        $sierra = $this->getClient();
-
-        return $sierra->getAccessToken();
-    }
-
-    /**
      * Get a configured Sierra client instance.
      *
      * This method retrieves the client key, secret, and base URL from environment variables,
-     * then creates and returns a new instance of the Sierra SDK.
+     * then creates and returns a shared instance of the Sierra SDK.
      */
     public function getClient(): \VincentAuger\SierraSdk\Sierra
     {
 
-        if ($this->sierra instanceof \VincentAuger\SierraSdk\Sierra) {
-            return $this->sierra;
+        if (self::$sierra instanceof \VincentAuger\SierraSdk\Sierra) {
+            return self::$sierra;
         }
 
         $key = $_ENV['SIERRA_CLIENT_KEY'] ?? 'your-client-key';
         $secret = $_ENV['SIERRA_CLIENT_SECRET'] ?? 'your-client-secret';
         $baseUrl = $_ENV['SIERRA_API_URL'] ?? 'https://api.example.com';
 
-        $this->sierra = new \VincentAuger\SierraSdk\Sierra(
+        self::$sierra = new \VincentAuger\SierraSdk\Sierra(
             baseUrl: $baseUrl,
             clientKey: $key,
             clientSecret: $secret
         );
 
-        return $this->sierra;
+        if ($this->allowAuth()) {
+            echo "Authenticating Sierra client in test environment.\n";
+            self::$authenticator = self::$sierra->getAccessToken();
+            self::$sierra->authenticate(self::$authenticator);
+        }
+
+        return self::$sierra;
+    }
+
+    public function allowAuth(): bool
+    {
+        // Check if the environment variable is set to true
+        return isset($_ENV['ENABLE_IN_TESTS']) && $_ENV['ENABLE_IN_TESTS'] === 'true';
+    }
+
+    public function getAuthenticator(): ?Authenticator
+    {
+        return self::$authenticator;
     }
 }

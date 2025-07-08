@@ -17,19 +17,13 @@ it('can get a token from the API', function (): void {
 
     echo "Using API URL: $baseUrl\n";
 
-    $sierra = new \VincentAuger\SierraSdk\Sierra(
-        baseUrl: $baseUrl ?? 'https://api.example.com',
-        clientKey: $key ?? 'your-client',
-        clientSecret: $secret ?? 'your-client-secret'
-    );
-
-    $authenticator = $sierra->getAccessToken();
+    $sierra = $this->getClient();
+    $authenticator = $sierra->getAuthenticator();
 
     expect($authenticator->getAccessToken())->toBeString();
     expect($authenticator->getExpiresAt())->toBeInstanceOf(DateTimeImmutable::class);
     expect($authenticator->hasExpired())->toBeFalse();
-
-})->skip('This test hits the real API and requires valid credentials.');
+})->skip(true, 'This test hits the real API and requires valid credentials.');
 
 it('can get a list of bibs', function (): void {
 
@@ -40,12 +34,6 @@ it('can get a list of bibs', function (): void {
     $sierra = $this->getClient();
 
     $sierra->withMockClient($mockClient);
-
-    // If you want to test against the real API, uncomment the following lines
-    // and delete the json response fixture.
-    // $authenticator = $this->getAuthenticator();
-    // $sierra->authenticate($authenticator);
-
     $response = $sierra->send(new GetList()->deleted(false));
 
     $dto = $response->dto();
@@ -57,8 +45,7 @@ it('can get a list of bibs', function (): void {
     expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibResultSet::class);
     expect($dto->total)->toBe(50);
     expect($dto->start)->toBe(0);
-    expect($dto->entries)->toBeArray();
-    expect($dto->entries)->toHaveCount(50);
+    expect($dto->entries)->toBeArray()->toHaveCount(50);
     expect($dto->entries[0])->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibObject::class);
 
 });
