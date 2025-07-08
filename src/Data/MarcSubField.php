@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace VincentAuger\SierraSdk\Data;
 
 /**
- * Sierra API Language DTO
+ * Sierra API MARC Subfield DTO
  *
- * Represents a language code and display name
+ * Represents a MARC subfield with code and data
  */
-final readonly class Lang
+final readonly class MarcSubField
 {
     public function __construct(
         public string $code,
-        public ?string $name = null,
+        public string $data,
     ) {}
 
     /**
-     * Create a Lang from Sierra API response data
+     * Create a MarcSubField from Sierra API response data
      *
      * @param  array<string, mixed>  $data
      */
@@ -25,12 +25,12 @@ final readonly class Lang
     {
         return new self(
             code: $data['code'],
-            name: $data['name'] ?? null,
+            data: $data['data'],
         );
     }
 
     /**
-     * Convert the Lang to an array
+     * Convert the MarcSubField to an array
      *
      * @return array<string, mixed>
      */
@@ -38,15 +38,7 @@ final readonly class Lang
     {
         return [
             'code' => $this->code,
-            'name' => $this->name,
+            'data' => $this->data,
         ];
-    }
-
-    /**
-     * Get the display name or fallback to code
-     */
-    public function getDisplayName(): string
-    {
-        return $this->name ?? $this->code;
     }
 }

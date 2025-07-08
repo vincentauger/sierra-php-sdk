@@ -1,17 +1,16 @@
 <?php
 
-namespace VincentAuger\SierraSdk\Data;
+declare(strict_types=1);
 
+namespace VincentAuger\SierraSdk\Data;
 
 /**
  * Sierra API Bib Object List
  *
  * This class represents a list of Bib objects returned by the Sierra API.
- *
  */
-class BibResultSet
+final class BibResultSet
 {
-
     /**
      * @param  int  $total  Total number of Bib objects found
      * @param  int  $start  Starting index of the returned Bib objects

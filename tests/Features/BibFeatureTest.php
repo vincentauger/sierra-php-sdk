@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use VincentAuger\SierraSdk\Requests\Bib\GetList;
@@ -46,8 +48,17 @@ it('can get a list of bibs', function (): void {
 
     $response = $sierra->send(new GetList()->deleted(false));
 
+    $dto = $response->dto();
+
     expect($response->status())->toBe(200);
     expect($response->json())->toBeArray();
     expect($response->json())->toHaveKey('entries');
+
+    expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibResultSet::class);
+    expect($dto->total)->toBe(50);
+    expect($dto->start)->toBe(0);
+    expect($dto->entries)->toBeArray();
+    expect($dto->entries)->toHaveCount(50);
+    expect($dto->entries[0])->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibObject::class);
 
 });

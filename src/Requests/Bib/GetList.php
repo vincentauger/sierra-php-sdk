@@ -6,7 +6,9 @@ namespace VincentAuger\SierraSdk\Requests\Bib;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
+use VincentAuger\SierraSdk\Data\BibResultSet;
 use VincentAuger\SierraSdk\Traits\QueryParam;
 
 /**
@@ -26,6 +28,14 @@ final class GetList extends Request
     public function resolveEndpoint(): string
     {
         return '/bibs';
+    }
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        $data = $response->json();
+
+        return BibResultSet::fromArray($data);
+
     }
 
     /**

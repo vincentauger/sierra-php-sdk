@@ -16,73 +16,42 @@ use DateTimeImmutable;
 final readonly class BibObject
 {
     public function __construct(
-        public int $id,
+        public int|string $id,
         public ?DateTimeImmutable $updatedDate = null,
         public ?DateTimeImmutable $createdDate = null,
         public ?DateTimeImmutable $deletedDate = null,
         public ?bool $deleted = null,
         public ?bool $suppressed = null,
         public ?string $available = null,
-        public ?Lang $lang = null,
+        public ?string $isbn = null,
+        public ?string $issn = null,
+        public ?string $upc = null,
+        public ?Language $lang = null,
         public ?string $title = null,
         public ?string $author = null,
+        public ?Marc $marc = null,
         public ?MaterialType $materialType = null,
         public ?BibLevel $bibLevel = null,
-        public ?string $publishYear = null,
+        public ?int $publishYear = null,
         public ?string $catalogDate = null,
-        public ?string $country = null,
-        /** @var array<string>|null */
-        public ?array $normTitle = null,
-        /** @var array<string>|null */
-        public ?array $normAuthor = null,
-        /** @var Order[]|null */
+        public ?Country $country = null,
+        /** @var OrderInfo[]|null */
         public ?array $orders = null,
-        /** @var VarField[]|null */
-        public ?array $varFields = null,
-        /** @var FixedField[]|null */
-        public ?array $fixedFields = null,
+        public ?string $normTitle = null,
+        public ?string $normAuthor = null,
         /** @var Location[]|null */
         public ?array $locations = null,
         public ?int $holdCount = null,
         public ?int $copies = null,
-        public ?string $recordType = null,
-        public ?string $recordNumber = null,
-        public ?string $campus = null,
-        /** @var Uri[]|null */
-        public ?array $uris = null,
+        public ?string $callNumber = null,
         /** @var array<string>|null */
-        public ?array $isbn = null,
+        public ?array $volumes = null,
         /** @var array<string>|null */
-        public ?array $issn = null,
-        /** @var array<string>|null */
-        public ?array $oclc = null,
-        /** @var array<string>|null */
-        public ?array $lccn = null,
-        /** @var array<string>|null */
-        public ?array $subjects = null,
-        /** @var array<string>|null */
-        public ?array $genres = null,
-        /** @var array<string>|null */
-        public ?array $notes = null,
-        /** @var array<string>|null */
-        public ?array $seriesStatement = null,
-        public ?string $edition = null,
-        public ?string $imprint = null,
-        public ?string $physicalDescription = null,
-        /** @var array<string>|null */
-        public ?array $contents = null,
-        /** @var array<string>|null */
-        public ?array $summary = null,
-        public ?string $audience = null,
-        public ?string $classification = null,
-        /** @var array<string>|null */
-        public ?array $alternativeTitles = null,
-        /** @var array<string>|null */
-        public ?array $relatedWorks = null,
-        /** @var array<mixed>|null */
-        public ?array $electronicResources = null,
-        /** @var array<mixed>|null */
-        public ?array $customFields = null,
+        public ?array $items = null,
+        /** @var FixedField[]|null */
+        public ?array $fixedFields = null,
+        /** @var VarField[]|null */
+        public ?array $varFields = null,
     ) {}
 
     /**
@@ -100,60 +69,41 @@ final readonly class BibObject
             deleted: $data['deleted'] ?? null,
             suppressed: $data['suppressed'] ?? null,
             available: $data['available'] ?? null,
-            lang: isset($data['lang']) ? Lang::fromArray($data['lang']) : null,
+            isbn: $data['isbn'] ?? null,
+            issn: $data['issn'] ?? null,
+            upc: $data['upc'] ?? null,
+            lang: isset($data['lang']) ? Language::fromArray($data['lang']) : null,
             title: $data['title'] ?? null,
             author: $data['author'] ?? null,
+            marc: isset($data['marc']) ? Marc::fromArray($data['marc']) : null,
             materialType: isset($data['materialType']) ? MaterialType::fromArray($data['materialType']) : null,
             bibLevel: isset($data['bibLevel']) ? BibLevel::fromArray($data['bibLevel']) : null,
             publishYear: $data['publishYear'] ?? null,
             catalogDate: $data['catalogDate'] ?? null,
-            country: $data['country'] ?? null,
-            normTitle: $data['normTitle'] ?? null,
-            normAuthor: $data['normAuthor'] ?? null,
+            country: isset($data['country']) ? Country::fromArray($data['country']) : null,
             orders: isset($data['orders']) ? array_map(
-                fn (array $order): \VincentAuger\SierraSdk\Data\Order => Order::fromArray($order),
+                fn (array $order): OrderInfo => OrderInfo::fromArray($order),
                 $data['orders']
             ) : null,
-            varFields: isset($data['varFields']) ? array_map(
-                fn (array $varField): \VincentAuger\SierraSdk\Data\VarField => VarField::fromArray($varField),
-                $data['varFields']
-            ) : null,
-            fixedFields: isset($data['fixedFields']) ? array_map(
-                fn (array $fixedField): \VincentAuger\SierraSdk\Data\FixedField => FixedField::fromArray($fixedField),
-                $data['fixedFields']
-            ) : null,
+            normTitle: $data['normTitle'] ?? null,
+            normAuthor: $data['normAuthor'] ?? null,
             locations: isset($data['locations']) ? array_map(
-                fn (array $location): \VincentAuger\SierraSdk\Data\Location => Location::fromArray($location),
+                fn (array $location): Location => Location::fromArray($location),
                 $data['locations']
             ) : null,
             holdCount: $data['holdCount'] ?? null,
             copies: $data['copies'] ?? null,
-            recordType: $data['recordType'] ?? null,
-            recordNumber: $data['recordNumber'] ?? null,
-            campus: $data['campus'] ?? null,
-            uris: isset($data['uris']) ? array_map(
-                fn (array $uri): \VincentAuger\SierraSdk\Data\Uri => Uri::fromArray($uri),
-                $data['uris']
+            callNumber: $data['callNumber'] ?? null,
+            volumes: $data['volumes'] ?? null,
+            items: $data['items'] ?? null,
+            fixedFields: isset($data['fixedFields']) ? array_map(
+                fn (array $fixedField): FixedField => FixedField::fromArray($fixedField),
+                $data['fixedFields']
             ) : null,
-            isbn: $data['isbn'] ?? null,
-            issn: $data['issn'] ?? null,
-            oclc: $data['oclc'] ?? null,
-            lccn: $data['lccn'] ?? null,
-            subjects: $data['subjects'] ?? null,
-            genres: $data['genres'] ?? null,
-            notes: $data['notes'] ?? null,
-            seriesStatement: $data['seriesStatement'] ?? null,
-            edition: $data['edition'] ?? null,
-            imprint: $data['imprint'] ?? null,
-            physicalDescription: $data['physicalDescription'] ?? null,
-            contents: $data['contents'] ?? null,
-            summary: $data['summary'] ?? null,
-            audience: $data['audience'] ?? null,
-            classification: $data['classification'] ?? null,
-            alternativeTitles: $data['alternativeTitles'] ?? null,
-            relatedWorks: $data['relatedWorks'] ?? null,
-            electronicResources: $data['electronicResources'] ?? null,
-            customFields: $data['customFields'] ?? null,
+            varFields: isset($data['varFields']) ? array_map(
+                fn (array $varField): VarField => VarField::fromArray($varField),
+                $data['varFields']
+            ) : null,
         );
     }
 
@@ -172,60 +122,41 @@ final readonly class BibObject
             'deleted' => $this->deleted,
             'suppressed' => $this->suppressed,
             'available' => $this->available,
+            'isbn' => $this->isbn,
+            'issn' => $this->issn,
+            'upc' => $this->upc,
             'lang' => $this->lang?->toArray(),
             'title' => $this->title,
             'author' => $this->author,
+            'marc' => $this->marc?->toArray(),
             'materialType' => $this->materialType?->toArray(),
             'bibLevel' => $this->bibLevel?->toArray(),
             'publishYear' => $this->publishYear,
             'catalogDate' => $this->catalogDate,
-            'country' => $this->country,
-            'normTitle' => $this->normTitle,
-            'normAuthor' => $this->normAuthor,
+            'country' => $this->country?->toArray(),
             'orders' => $this->orders !== null && $this->orders !== [] ? array_map(
-                fn (Order $order): array => $order->toArray(),
+                fn (OrderInfo $order): array => $order->toArray(),
                 $this->orders
             ) : null,
-            'varFields' => $this->varFields !== null && $this->varFields !== [] ? array_map(
-                fn (VarField $varField): array => $varField->toArray(),
-                $this->varFields
-            ) : null,
-            'fixedFields' => $this->fixedFields !== null && $this->fixedFields !== [] ? array_map(
-                fn (FixedField $fixedField): array => $fixedField->toArray(),
-                $this->fixedFields
-            ) : null,
+            'normTitle' => $this->normTitle,
+            'normAuthor' => $this->normAuthor,
             'locations' => $this->locations !== null && $this->locations !== [] ? array_map(
                 fn (Location $location): array => $location->toArray(),
                 $this->locations
             ) : null,
             'holdCount' => $this->holdCount,
             'copies' => $this->copies,
-            'recordType' => $this->recordType,
-            'recordNumber' => $this->recordNumber,
-            'campus' => $this->campus,
-            'uris' => $this->uris !== null && $this->uris !== [] ? array_map(
-                fn (Uri $uri): array => $uri->toArray(),
-                $this->uris
+            'callNumber' => $this->callNumber,
+            'volumes' => $this->volumes,
+            'items' => $this->items,
+            'fixedFields' => $this->fixedFields !== null && $this->fixedFields !== [] ? array_map(
+                fn (FixedField $fixedField): array => $fixedField->toArray(),
+                $this->fixedFields
             ) : null,
-            'isbn' => $this->isbn,
-            'issn' => $this->issn,
-            'oclc' => $this->oclc,
-            'lccn' => $this->lccn,
-            'subjects' => $this->subjects,
-            'genres' => $this->genres,
-            'notes' => $this->notes,
-            'seriesStatement' => $this->seriesStatement,
-            'edition' => $this->edition,
-            'imprint' => $this->imprint,
-            'physicalDescription' => $this->physicalDescription,
-            'contents' => $this->contents,
-            'summary' => $this->summary,
-            'audience' => $this->audience,
-            'classification' => $this->classification,
-            'alternativeTitles' => $this->alternativeTitles,
-            'relatedWorks' => $this->relatedWorks,
-            'electronicResources' => $this->electronicResources,
-            'customFields' => $this->customFields,
+            'varFields' => $this->varFields !== null && $this->varFields !== [] ? array_map(
+                fn (VarField $varField): array => $varField->toArray(),
+                $this->varFields
+            ) : null,
         ];
     }
 
@@ -278,11 +209,7 @@ final readonly class BibObject
      */
     public function getIsbnString(): ?string
     {
-        if ($this->isbn === null || $this->isbn === []) {
-            return null;
-        }
-
-        return implode(', ', $this->isbn);
+        return $this->isbn;
     }
 
     /**
@@ -290,11 +217,7 @@ final readonly class BibObject
      */
     public function getIssnString(): ?string
     {
-        if ($this->issn === null || $this->issn === []) {
-            return null;
-        }
-
-        return implode(', ', $this->issn);
+        return $this->issn;
     }
 
     /**
@@ -353,7 +276,7 @@ final readonly class BibObject
     /**
      * Get all active orders
      *
-     * @return Order[]
+     * @return OrderInfo[]
      */
     public function getActiveOrders(): array
     {
@@ -363,18 +286,18 @@ final readonly class BibObject
 
         return array_filter(
             $this->orders,
-            fn (Order $order): bool => $order->status !== 'cancelled' && $order->status !== 'received'
+            fn (OrderInfo $order): bool => $order->orderId !== '' // Since OrderInfo doesn't have status, we check for non-empty orderId
         );
     }
 
     /**
-     * Get all URIs
+     * Get all URIs (not available in this version)
      *
      * @return Uri[]
      */
     public function getUris(): array
     {
-        return $this->uris ?? [];
+        return [];
     }
 
     /**
