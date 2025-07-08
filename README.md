@@ -2,7 +2,7 @@
 
 A modern PHP SDK for the Sierra ILS API (v6) platform, built for maintainability and clarity using [Saloon](https://docs.saloon.dev) for HTTP integration.
 
-> **Current Status:** Focused on the **Bibliographic API (Bib API)**. Designed for future expansion to other Sierra endpoints.
+> **Current Status:** Focused on querying (read-only) the **Bibliographic API (Bib API)**. Designed for future expansion to other Sierra endpoints.
 
 ---
 
@@ -29,7 +29,7 @@ composer require vincentauger/sierra-sdk
 use VincentAuger\SierraSdk\Client;
 
 $client = new Client(
-    baseUrl: 'https://your.sierra.server/iii/sierra-api/v6/',
+    baseUrl: 'https://your.sierra.server/iii/sierra-api/v6',
     clientKey: 'your_client_key',
     clientSecret: 'your_client_secret',
 );
@@ -60,7 +60,7 @@ You must provide:
 
 | Parameter | Description |
 |-----------|-------------|
-| baseUrl | Base URL of the Sierra API |
+| baseUrl | Base URL of the Sierra API (ends with `/v6`) |
 | clientKey | OAuth2 client key |
 | clientSecret | OAuth2 client secret |
 
@@ -75,9 +75,10 @@ You must provide:
 ## Roadmap
 
 - [x] Basic client and authentication
-- [ ] List bit reords
-- [ ] Fetch single bib record
-- [ ] Search bib index
+- [x] Query the bib records `GET /v6/bibs/`
+- [ ] Search the bib records `GET /v6/bibs/search`
+- [ ] Fetch single bib record `GET /v6/bibs/{id}`
+- [ ] Metadata search `GET /v6/bibs/metadata`
 
 ## Requirements
 
