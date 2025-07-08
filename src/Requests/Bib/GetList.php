@@ -7,6 +7,7 @@ namespace VincentAuger\SierraSdk\Requests\Bib;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
+use VincentAuger\SierraSdk\Traits\QueryParam;
 
 /**
  * Retrieve a list of bibliographic records from Sierra.
@@ -18,6 +19,7 @@ use Saloon\Traits\Request\CreatesDtoFromResponse;
 final class GetList extends Request
 {
     use CreatesDtoFromResponse;
+    use QueryParam;
 
     protected Method $method = Method::GET;
 
@@ -53,13 +55,30 @@ final class GetList extends Request
     /**
      * Filter by a comma-delimited list of IDs of bibs to retrieve.
      *
+     * For exact ID matching:
+     * id=1000004
+     *
+     * For multiple IDs:
+     * id=[1000004,1000054,1000055]
+     *
      * @param  array<int|string>  $ids  Array of bib IDs
      */
     public function ids(array $ids): self
     {
-        $this->query()->add('id', implode(',', $ids));
+        return $this->addIdsParam($ids);
+    }
 
-        return $this;
+    /**
+     * Filter by ID range.
+     *
+     * @param  int|string|null  $startId  Start ID (inclusive), null for open start
+     * @param  int|string|null  $endId  End ID (inclusive), null for open end
+     *
+     * @throws \InvalidArgumentException When both parameters are null
+     */
+    public function idRange(int|string|null $startId = null, int|string|null $endId = null): self
+    {
+        return $this->addIdRangeParam($startId, $endId);
     }
 
     /**
@@ -76,41 +95,116 @@ final class GetList extends Request
 
     /**
      * Filter by the creation date of bibs to retrieve.
-     * Can be a single date or a range (e.g., "2024-01-01,2024-12-31").
      *
-     * @param  string  $createdDate  Date or date range in ISO format
+     * For exact date matching:
+     * createdDate=2013-12-10T17:16:35Z
+     *
+     * For date range (inclusive):
+     * createdDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime  $createdDate  Exact creation date
      */
-    public function createdDate(string $createdDate): self
+    public function createdDate(\DateTime $createdDate): self
     {
-        $this->query()->add('createdDate', $createdDate);
+        return $this->addDateParam('createdDate', $createdDate);
+    }
 
-        return $this;
+    /**
+     * Filter by a creation date range (inclusive).
+     *
+     * From date and after (inclusive):
+     * createdDate=[2013-12-10T17:16:35Z,]
+     *
+     * Up to and including date:
+     * createdDate=[,2013-12-13T21:34:35Z]
+     *
+     * From start to end (inclusive):
+     * createdDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime|null  $startDate  Start of the date range (inclusive), null for open start
+     * @param  \DateTime|null  $endDate  End of the date range (inclusive), null for open end
+     *
+     * @throws \InvalidArgumentException When both parameters are null
+     */
+    public function createdDateRange(?\DateTime $startDate = null, ?\DateTime $endDate = null): self
+    {
+        return $this->addDateRangeParam('createdDate', $startDate, $endDate);
     }
 
     /**
      * Filter by the modification date of bibs to retrieve.
-     * Can be a single date or a range (e.g., "2024-01-01,2024-12-31").
      *
-     * @param  string  $updatedDate  Date or date range in ISO format
+     * For exact date matching:
+     * updatedDate=2013-12-10T17:16:35Z
+     *
+     * For date range (inclusive):
+     * updatedDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime  $updatedDate  Exact modification date
      */
-    public function updatedDate(string $updatedDate): self
+    public function updatedDate(\DateTime $updatedDate): self
     {
-        $this->query()->add('updatedDate', $updatedDate);
+        return $this->addDateParam('updatedDate', $updatedDate);
+    }
 
-        return $this;
+    /**
+     * Filter by a modification date range (inclusive).
+     *
+     * From date and after (inclusive):
+     * updatedDate=[2013-12-10T17:16:35Z,]
+     *
+     * Up to and including date:
+     * updatedDate=[,2013-12-13T21:34:35Z]
+     *
+     * From start to end (inclusive):
+     * updatedDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime|null  $startDate  Start of the date range (inclusive), null for open start
+     * @param  \DateTime|null  $endDate  End of the date range (inclusive), null for open end
+     *
+     * @throws \InvalidArgumentException When both parameters are null
+     */
+    public function updatedDateRange(?\DateTime $startDate = null, ?\DateTime $endDate = null): self
+    {
+        return $this->addDateRangeParam('updatedDate', $startDate, $endDate);
     }
 
     /**
      * Filter by the deletion date of deleted bibs to retrieve.
-     * Can be a single date or a range (e.g., "2024-01-01,2024-12-31").
      *
-     * @param  string  $deletedDate  Date or date range in ISO format
+     * For exact date matching:
+     * deletedDate=2013-12-10T17:16:35Z
+     *
+     * For date range (inclusive):
+     * deletedDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime  $deletedDate  Exact deletion date
      */
-    public function deletedDate(string $deletedDate): self
+    public function deletedDate(\DateTime $deletedDate): self
     {
-        $this->query()->add('deletedDate', $deletedDate);
+        return $this->addDateParam('deletedDate', $deletedDate);
+    }
 
-        return $this;
+    /**
+     * Filter by a deletion date range (inclusive).
+     *
+     * From date and after (inclusive):
+     * deletedDate=[2013-12-10T17:16:35Z,]
+     *
+     * Up to and including date:
+     * deletedDate=[,2013-12-13T21:34:35Z]
+     *
+     * From start to end (inclusive):
+     * deletedDate=[2013-12-10T17:16:35Z,2013-12-13T21:34:35Z]
+     *
+     * @param  \DateTime|null  $startDate  Start of the date range (inclusive), null for open start
+     * @param  \DateTime|null  $endDate  End of the date range (inclusive), null for open end
+     *
+     * @throws \InvalidArgumentException When both parameters are null
+     */
+    public function deletedDateRange(?\DateTime $startDate = null, ?\DateTime $endDate = null): self
+    {
+        return $this->addDateRangeParam('deletedDate', $startDate, $endDate);
     }
 
     /**
