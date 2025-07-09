@@ -30,7 +30,7 @@ final class GetList extends Request
         return '/bibs';
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): BibResultSet
     {
         $data = $response->json();
 

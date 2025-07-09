@@ -23,9 +23,14 @@ final readonly class MarcSubField
      */
     public static function fromArray(array $data): self
     {
+        // The data structure is: [code => data]
+        // e.g., ["a" => "Beaudry-Sylvestre, Manuelle."]
+        $code = (string) array_key_first($data);
+        $subfieldData = $data[$code];
+
         return new self(
-            code: $data['code'],
-            data: $data['data'],
+            code: $code,
+            data: (string) $subfieldData,
         );
     }
 
@@ -37,8 +42,7 @@ final readonly class MarcSubField
     public function toArray(): array
     {
         return [
-            'code' => $this->code,
-            'data' => $this->data,
+            $this->code => $this->data,
         ];
     }
 }

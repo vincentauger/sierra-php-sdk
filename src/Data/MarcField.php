@@ -24,14 +24,25 @@ final readonly class MarcField
      */
     public static function fromArray(array $data): self
     {
+        // The data structure is: [tag => field_data]
+        // e.g., [100 => ['subfields' => [...], 'ind1' => '1', 'ind2' => ' ']]
+        $tag = (string) array_key_first($data);
+        $fieldContent = $data[$tag];
+
         $fieldData = null;
-        if (isset($data['data']) && is_array($data['data'])) {
-            $fieldData = FieldData::fromArray($data['data']);
+        $value = null;
+
+        // Control fields (tag < 010) have a direct value
+        if (intval($tag) < 10) {
+            $value = is_string($fieldContent) ? $fieldContent : null;
+        } elseif (is_array($fieldContent)) {
+            // Data fields have subfields, indicators, etc.
+            $fieldData = FieldData::fromArray($fieldContent);
         }
 
         return new self(
-            tag: $data['tag'],
-            value: $data['value'] ?? null,
+            tag: $tag,
+            value: $value,
             data: $fieldData,
         );
     }
@@ -43,19 +54,23 @@ final readonly class MarcField
      */
     public function toArray(): array
     {
-        $result = [
-            'tag' => $this->tag,
-        ];
-
         if ($this->value !== null) {
-            $result['value'] = $this->value;
+            // Control field: [tag => value]
+            return [
+                $this->tag => $this->value,
+            ];
         }
 
         if ($this->data instanceof \VincentAuger\SierraSdk\Data\FieldData) {
-            $result['data'] = $this->data->toArray();
+            // Data field: [tag => field_data]
+            return [
+                $this->tag => $this->data->toArray(),
+            ];
         }
 
-        return $result;
+        return [
+            $this->tag => null,
+        ];
     }
 
     /**

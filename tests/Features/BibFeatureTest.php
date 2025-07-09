@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
+use VincentAuger\SierraSdk\Requests\Bib\GetBib;
 use VincentAuger\SierraSdk\Requests\Bib\GetList;
 
 /**
@@ -11,8 +12,6 @@ use VincentAuger\SierraSdk\Requests\Bib\GetList;
  */
 it('can get a token from the API', function (): void {
 
-    $key = $_ENV['SIERRA_CLIENT_KEY'];
-    $secret = $_ENV['SIERRA_CLIENT_SECRET'];
     $baseUrl = $_ENV['SIERRA_API_URL'];
 
     echo "Using API URL: $baseUrl\n";
@@ -23,7 +22,7 @@ it('can get a token from the API', function (): void {
     expect($authenticator->getAccessToken())->toBeString();
     expect($authenticator->getExpiresAt())->toBeInstanceOf(DateTimeImmutable::class);
     expect($authenticator->hasExpired())->toBeFalse();
-})->skip(true, 'This test hits the real API and requires valid credentials.');
+})->skip(false, 'This test hits the real API and requires valid credentials.');
 
 it('can get a list of bibs', function (): void {
 
@@ -47,5 +46,30 @@ it('can get a list of bibs', function (): void {
     expect($dto->start)->toBe(0);
     expect($dto->entries)->toBeArray()->toHaveCount(50);
     expect($dto->entries[0])->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibObject::class);
+
+});
+
+it('can query a single bib resource', function (): void {
+
+    $mockClient = new MockClient([
+        GetBib::class => MockResponse::fixture('getbib.with-fields'),
+    ]);
+
+    $sierra = $this->getClient();
+    $sierra->withMockClient($mockClient);
+
+    $response = $sierra->send(
+        new GetBib(4128733)->withFields([
+            'id',
+            'title',
+            'author',
+            'marc',
+        ]));
+
+    $dto = $response->dto();
+
+    expect($response->status())->toBe(200);
+    expect($response->json())->toBeArray();
+    expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibObject::class);
 
 });
