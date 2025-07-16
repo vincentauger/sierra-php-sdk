@@ -11,9 +11,9 @@ use VincentAuger\SierraSdk\Sierra;
 
 class BaseTest extends TestCase
 {
-    private ?Authenticator $authenticator = null;
+    private static ?Authenticator $authenticator = null;
 
-    private ?Sierra $sierra = null;
+    private static ?Sierra $sierra = null;
 
     public static function setUpBeforeClass(): void
     {
@@ -53,15 +53,15 @@ class BaseTest extends TestCase
     public function getClient(): \VincentAuger\SierraSdk\Sierra
     {
 
-        if ($this->sierra instanceof \VincentAuger\SierraSdk\Sierra) {
-            return $this->sierra;
+        if (self::$sierra instanceof \VincentAuger\SierraSdk\Sierra) {
+            return self::$sierra;
         }
 
         $key = $_ENV['SIERRA_CLIENT_KEY'] ?? 'your-client-key';
         $secret = $_ENV['SIERRA_CLIENT_SECRET'] ?? 'your-client-secret';
         $baseUrl = $_ENV['SIERRA_API_URL'] ?? 'https://api.example.com';
 
-        $this->sierra = new \VincentAuger\SierraSdk\Sierra(
+        self::$sierra = new \VincentAuger\SierraSdk\Sierra(
             baseUrl: $baseUrl,
             clientKey: $key,
             clientSecret: $secret
@@ -69,11 +69,11 @@ class BaseTest extends TestCase
 
         if ($this->allowAuth()) {
             echo "Authenticating Sierra client in test environment.\n";
-            $this->authenticator = $this->sierra->getAccessToken();
-            $this->sierra->authenticate($this->authenticator);
+            self::$authenticator = self::$sierra->getAccessToken();
+            self::$sierra->authenticate(self::$authenticator);
         }
 
-        return $this->sierra;
+        return self::$sierra;
     }
 
     public function allowAuth(): bool
@@ -84,6 +84,6 @@ class BaseTest extends TestCase
 
     public function getAuthenticator(): ?Authenticator
     {
-        return $this->authenticator;
+        return self::$authenticator;
     }
 }
