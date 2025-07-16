@@ -78,9 +78,9 @@ You must provide:
 
 - [x] Basic client and authentication
 - [x] Query the bib records `GET /v6/bibs/`
-- [ ] Search the bib records `GET /v6/bibs/search`
-- [ ] Fetch single bib record `GET /v6/bibs/{id}`
-- [ ] Metadata search `GET /v6/bibs/metadata`
+- [x] Search the bib records `GET /v6/bibs/search`
+- [ ] Query the bib records with JSON `POST /v6/bibs/search`
+- [x] Fetch single bib record `GET /v6/bibs/{id}`
 
 ## Requirements
 
@@ -99,5 +99,5 @@ MIT License — see the LICENSE file for details.
 
 ## Disclaimer
 
-- This SDK is not affiliated with Innovative Interfaces Inc.
+- This SDK is not affiliated with [Innovative Interfaces Inc.](https://www.iii.com/)
 - Use at your own risk. Respect your ILS API usage limits and security requirements.

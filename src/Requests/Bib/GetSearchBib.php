@@ -8,7 +8,6 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
-use VincentAuger\SierraSdk\Data\BibResultSet;
 use VincentAuger\SierraSdk\Data\BibSearchResultSet;
 use VincentAuger\SierraSdk\Traits\HasFieldParams;
 

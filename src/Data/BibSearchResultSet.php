@@ -55,7 +55,7 @@ final readonly class BibSearchResultSet
             'count' => $this->count,
             'total' => $this->total,
             'start' => $this->start,
-            'entries' => array_map(fn (BibSearchResultEntry $entry) => $entry->toArray(), $this->entries),
+            'entries' => array_map(fn (BibSearchResultEntry $entry): array => $entry->toArray(), $this->entries),
         ];
     }
 }
