@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 16 Jul 2025 17:11:31 GMT",
+        "Server": "Apache",
+        "Content-Type": "application\/json;charset=UTF-8",
+        "Content-Length": "620",
+        "Vary": "Accept-Encoding,User-Agent",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": [
+            "jcontainerId=.jcontainer-public2; path=\/iii\/sierra-api",
+            "jcontainerId=.jcontainer-public2; path=\/iii\/webrpt",
+            "jcontainerId=.jcontainer-public2; path=\/sierra\/admin",
+            "jcontainerId=.jcontainer-public2; path=\/iii\/ws\/extlink",
+            "jcontainerId=.jcontainer-public2; path=\/sierra\/ws\/summit"
+        ],
+        "Strict-Transport-Security": "max-age=31536000",
+        "Content-Security-Policy": [
+            "default-src 'self' https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca cat.fsl-bsf.scitech.gc.ca; script-src 'unsafe-inline' 'unsafe-eval' 'self' https:\/\/google.com https:\/\/*.google.com https:\/\/maps.googleapis.com https:\/\/ebscohost.com https:\/\/*.ebscohost.com https:\/\/cdn.appdynamics.com https:\/\/prototypejs.org https:\/\/o.aolcdn.com https:\/\/s7.addthis.com https:\/\/www.gstatic.com https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca https:\/\/www.googletagmanager.com https:\/\/ca.libraryh3lp.com; connect-src 'self' https:\/\/col.eum-appdynamics.com https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca https:\/\/www.google-analytics.com;  upgrade-insecure-requests; block-all-mixed-content; style-src 'unsafe-inline' https:; img-src https: blob: data:; media-src https: blob: data:; font-src https: data:; object-src 'none';",
+            "frame-ancestors 'self' ;"
+        ]
+    },
+    "data": "{\"count\":1,\"total\":1,\"start\":0,\"entries\":[{\"relevance\":1.7999999523162842,\"bib\":{\"id\":\"4127525\",\"updatedDate\":\"2025-01-30T16:26:22Z\",\"createdDate\":\"2025-01-29T21:55:18Z\",\"deleted\":false,\"suppressed\":false,\"isbn\":\"9780660741284\",\"lang\":{\"code\":\"eng\",\"name\":\"English\"},\"title\":\"What we heard : summary of community meetings to propose a new beluga tagging program in the Inuvialuit Settlement Region\",\"author\":\"MacPhee, Shannon A.\",\"materialType\":{\"code\":\"a  \",\"value\":\"LANG MATERIAL\"},\"bibLevel\":{\"code\":\"m\",\"value\":\"MONOGRAPH\"},\"publishYear\":2025,\"catalogDate\":\"2025-01-29\",\"country\":{\"code\":\"mbc\",\"name\":\"Manitoba\"}}}]}",
+    "context": []
+}

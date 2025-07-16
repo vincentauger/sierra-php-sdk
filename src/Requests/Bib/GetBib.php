@@ -9,12 +9,12 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 use VincentAuger\SierraSdk\Data\BibObject;
-use VincentAuger\SierraSdk\Traits\QueryParam;
+use VincentAuger\SierraSdk\Traits\HasFieldParams;
 
 final class GetBib extends Request
 {
     use CreatesDtoFromResponse;
-    use QueryParam;
+    use HasFieldParams;
 
     protected Method $method = Method::GET;
 
@@ -32,18 +32,5 @@ final class GetBib extends Request
         $data = $response->json();
 
         return BibObject::fromArray($data);
-
-    }
-
-    /**
-     * Set the fields to include in the response.
-     *
-     * @param  array<string>  $fields
-     */
-    public function withFields(array $fields): self
-    {
-        $this->query()->add('fields', implode(',', $fields));
-
-        return $this;
     }
 }

@@ -4,6 +4,8 @@ A modern PHP SDK for the Sierra ILS API (v6) platform, built for maintainability
 
 > **Current Status:** Focused on querying (read-only) the **Bibliographic API (Bib API)**. Designed for future expansion to other Sierra endpoints.
 
+For detailed information on the Sierra API, visit the [docs](https://techdocs.iii.com/sierraapi/Content/titlePage.htm)
+
 ---
 
 ## Features

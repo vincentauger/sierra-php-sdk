@@ -6,6 +6,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use VincentAuger\SierraSdk\Requests\Bib\GetBib;
 use VincentAuger\SierraSdk\Requests\Bib\GetList;
+use VincentAuger\SierraSdk\Requests\Bib\GetSearchBib;
 
 /**
  * Only run this test if the environment variables are set and you want to test against the real API.
@@ -58,18 +59,67 @@ it('can query a single bib resource', function (): void {
     $sierra = $this->getClient();
     $sierra->withMockClient($mockClient);
 
-    $response = $sierra->send(
-        new GetBib(4128733)->withFields([
-            'id',
-            'title',
-            'author',
-            'marc',
-        ]));
+    $requets = new GetBib(4128733)->withFields([
+        'id',
+        'title',
+        'author',
+        'marc',
+    ]);
 
-    $dto = $response->dto();
+    $response = $sierra->send($requets);
+
+    $dto = $requets->createDtoFromResponse($response);
 
     expect($response->status())->toBe(200);
     expect($response->json())->toBeArray();
     expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibObject::class);
+
+});
+
+it('can search for bibs', function (): void {
+
+    $mockClient = new MockClient([
+        GetSearchBib::class => MockResponse::fixture('getsearchbib'),
+    ]);
+
+    $sierra = $this->getClient();
+    $sierra->withMockClient($mockClient);
+
+    $request = new GetSearchBib('doi.org');
+    $response = $sierra->send($request);
+
+    $dto = $request->createDtoFromResponse($response);
+
+    expect($response->status())->toBe(200);
+    expect($response->json())->toBeArray();
+    expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibSearchResultSet::class);
+    expect($dto->count)->toBe(50);
+    expect($dto->total)->toBe(109);
+    expect($dto->start)->toBe(0);
+    expect($dto->entries)->toBeArray()->toHaveCount(50);
+
+});
+
+it('can search for bibs with a speficic doi', function (): void {
+
+    $mockClient = new MockClient([
+        GetSearchBib::class => MockResponse::fixture('getsearchbib.doi'),
+    ]);
+
+    $sierra = $this->getClient();
+    $sierra->withMockClient($mockClient);
+
+    $request = new GetSearchBib('https://doi.org/10.60825/xd80-gb65');
+    $response = $sierra->send($request);
+
+    $dto = $request->createDtoFromResponse($response);
+
+    expect($response->status())->toBe(200);
+    expect($response->json())->toBeArray();
+    expect($dto)->toBeInstanceOf(\VincentAuger\SierraSdk\Data\BibSearchResultSet::class);
+    expect($dto->count)->toBe(1);
+    expect($dto->total)->toBe(1);
+    expect($dto->start)->toBe(0);
+    expect($dto->entries)->toBeArray()->toHaveCount(1);
 
 });

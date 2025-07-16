@@ -9,7 +9,9 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 use VincentAuger\SierraSdk\Data\BibResultSet;
-use VincentAuger\SierraSdk\Traits\QueryParam;
+use VincentAuger\SierraSdk\Traits\HasDateParams;
+use VincentAuger\SierraSdk\Traits\HasFieldParams;
+use VincentAuger\SierraSdk\Traits\HasIdParams;
 
 /**
  * Retrieve a list of bibliographic records from Sierra.
@@ -21,7 +23,9 @@ use VincentAuger\SierraSdk\Traits\QueryParam;
 final class GetList extends Request
 {
     use CreatesDtoFromResponse;
-    use QueryParam;
+    use HasDateParams;
+    use HasFieldParams;
+    use HasIdParams;
 
     protected Method $method = Method::GET;
 
@@ -98,9 +102,7 @@ final class GetList extends Request
      */
     public function fields(array $fields): self
     {
-        $this->query()->add('fields', implode(',', $fields));
-
-        return $this;
+        return $this->withFields($fields);
     }
 
     /**
