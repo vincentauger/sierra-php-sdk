@@ -168,13 +168,13 @@ it('can query the bibs endpoint with a complex query', function (): void {
     $titleQuery = \VincentAuger\SierraSdk\Data\Query\QueryFactory::bib()
         ->field('t')
         ->has('scallop');
-    $authorQuery2 = \VincentAuger\SierraSdk\Data\Query\QueryFactory::bib()
+    $authorQuery = \VincentAuger\SierraSdk\Data\Query\QueryFactory::bib()
         ->field('a')
         ->has('sameoto');
 
     $query = \VincentAuger\SierraSdk\Data\Query\QueryFactory::and(
-       $titleQuery,
-       $authorQuery2
+        $titleQuery,
+        $authorQuery
     );
 
     $request = new PostQueryBib($query);
@@ -229,4 +229,6 @@ it('can query the bibs endpoint with a MARC field query', function (): void {
     $field024 = $bibDto->marc->getFirstFieldByTag('024');
     expect($field024->getSubfieldDataByCode('a'))->toBe('https://doi.org/10.60825/dmzw-we44');
 
+    $field650 = $bibDto->marc->getFieldsByTag('650');
+    expect($field650)->toBeArray()->toHaveCount(6);
 });
