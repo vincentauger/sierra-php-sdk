@@ -36,6 +36,7 @@ final class TargetBuilder
     public function fieldId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -45,6 +46,7 @@ final class TargetBuilder
     public function field(string $tag): self
     {
         $this->field = new Field(tag: $tag);
+
         return $this;
     }
 
@@ -63,6 +65,7 @@ final class TargetBuilder
             ind2: $ind2,
             subfields: $subfields
         );
+
         return $this;
     }
 
@@ -72,6 +75,7 @@ final class TargetBuilder
     public function specialField(int $specialField): self
     {
         $this->specialField = $specialField;
+
         return $this;
     }
 

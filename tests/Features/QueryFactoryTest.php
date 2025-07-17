@@ -13,12 +13,12 @@ it('can create a simple bibliographic title query', function (): void {
     $expected = [
         'target' => [
             'record' => ['type' => 'bib'],
-            'field' => ['tag' => 't']
+            'field' => ['tag' => 't'],
         ],
         'expr' => [
             'op' => 'equals',
-            'operands' => ['moby dick']
-        ]
+            'operands' => ['moby dick'],
+        ],
     ];
 
     expect($query->toArray())->toBe($expected);
@@ -36,13 +36,13 @@ it('can create a MARC field query', function (): void {
                 'marcTag' => '245',
                 'ind1' => '1',
                 'ind2' => '0',
-                'subfields' => 'a'
-            ]
+                'subfields' => 'a',
+            ],
         ],
         'expr' => [
             'op' => 'equals',
-            'operands' => ['moby dick']
-        ]
+            'operands' => ['moby dick'],
+        ],
     ];
 
     expect($query->toArray())->toBe($expected);
@@ -56,12 +56,12 @@ it('can create a field ID query', function (): void {
     $expected = [
         'target' => [
             'record' => ['type' => 'bib'],
-            'id' => 31
+            'id' => 31,
         ],
         'expr' => [
             'op' => 'range',
-            'operands' => ['2020', '2024']
-        ]
+            'operands' => ['2020', '2024'],
+        ],
     ];
 
     expect($query->toArray())->toBe($expected);
@@ -77,25 +77,25 @@ it('can create compound queries with AND', function (): void {
             [
                 'target' => [
                     'record' => ['type' => 'bib'],
-                    'field' => ['tag' => 't']
+                    'field' => ['tag' => 't'],
                 ],
                 'expr' => [
                     'op' => 'equals',
-                    'operands' => ['moby dick']
-                ]
+                    'operands' => ['moby dick'],
+                ],
             ],
             'AND',
             [
                 'target' => [
                     'record' => ['type' => 'bib'],
-                    'field' => ['tag' => 'a']
+                    'field' => ['tag' => 'a'],
                 ],
                 'expr' => [
                     'op' => 'has',
-                    'operands' => ['melville']
-                ]
-            ]
-        ]
+                    'operands' => ['melville'],
+                ],
+            ],
+        ],
     ];
 
     expect($compoundQuery->toArray())->toBe($expected);
@@ -111,25 +111,25 @@ it('can create compound queries with OR', function (): void {
             [
                 'target' => [
                     'record' => ['type' => 'bib'],
-                    'field' => ['tag' => 't']
+                    'field' => ['tag' => 't'],
                 ],
                 'expr' => [
                     'op' => 'equals',
-                    'operands' => ['moby dick']
-                ]
+                    'operands' => ['moby dick'],
+                ],
             ],
             'OR',
             [
                 'target' => [
                     'record' => ['type' => 'bib'],
-                    'field' => ['tag' => 't']
+                    'field' => ['tag' => 't'],
                 ],
                 'expr' => [
                     'op' => 'equals',
-                    'operands' => ['white whale']
-                ]
-            ]
-        ]
+                    'operands' => ['white whale'],
+                ],
+            ],
+        ],
     ];
 
     expect($orQuery->toArray())->toBe($expected);
@@ -179,14 +179,14 @@ it('can create queries with relations for soft-linked records', function (): voi
             'record' => [
                 'type' => 'bib',
                 'relationType' => 'related_resource',
-                'relationTag' => 'order'
+                'relationTag' => 'order',
             ],
-            'field' => ['tag' => 'name']
+            'field' => ['tag' => 'name'],
         ],
         'expr' => [
             'op' => 'has',
-            'operands' => ['test']
-        ]
+            'operands' => ['test'],
+        ],
     ];
 
     expect($query->toArray())->toBe($expected);
@@ -200,12 +200,12 @@ it('can create queries with special fields', function (): void {
     $expected = [
         'target' => [
             'record' => ['type' => 'bib'],
-            'specialField' => 1001
+            'specialField' => 1001,
         ],
         'expr' => [
             'op' => 'equals',
-            'operands' => ['value']
-        ]
+            'operands' => ['value'],
+        ],
     ];
 
     expect($query->toArray())->toBe($expected);

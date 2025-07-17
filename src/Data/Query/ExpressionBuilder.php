@@ -7,7 +7,7 @@ namespace VincentAuger\SierraSdk\Data\Query;
 /**
  * Builder for creating Sierra API query expressions with a fluent interface
  */
-final class ExpressionBuilder
+final readonly class ExpressionBuilder
 {
     public function __construct(
         private Target $target,
@@ -122,7 +122,7 @@ final class ExpressionBuilder
      */
     public function and(ExpressionBuilder $other): CompoundExpressionBuilder
     {
-        return new CompoundExpressionBuilder($this->target, [$this, 'AND', $other]);
+        return new CompoundExpressionBuilder([$this, 'AND', $other]);
     }
 
     /**
@@ -130,7 +130,7 @@ final class ExpressionBuilder
      */
     public function or(ExpressionBuilder $other): CompoundExpressionBuilder
     {
-        return new CompoundExpressionBuilder($this->target, [$this, 'OR', $other]);
+        return new CompoundExpressionBuilder([$this, 'OR', $other]);
     }
 
     /**

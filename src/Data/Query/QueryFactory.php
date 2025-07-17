@@ -59,8 +59,6 @@ final class QueryFactory
 
     /**
      * Create a compound query with AND logic
-     *
-     * @param Query ...$queries
      */
     public static function and(Query ...$queries): Query
     {
@@ -77,8 +75,6 @@ final class QueryFactory
 
     /**
      * Create a compound query with OR logic
-     *
-     * @param Query ...$queries
      */
     public static function or(Query ...$queries): Query
     {

@@ -9,8 +9,10 @@ namespace VincentAuger\SierraSdk\Data\Query;
  */
 final class CompoundExpressionBuilder
 {
+    /**
+     * @param  array<ExpressionBuilder|string>  $expressions
+     */
     public function __construct(
-        private Target $target,
         private array $expressions,
     ) {}
 
@@ -21,6 +23,7 @@ final class CompoundExpressionBuilder
     {
         $this->expressions[] = 'AND';
         $this->expressions[] = $expression;
+
         return $this;
     }
 
@@ -31,6 +34,7 @@ final class CompoundExpressionBuilder
     {
         $this->expressions[] = 'OR';
         $this->expressions[] = $expression;
+
         return $this;
     }
 
@@ -39,9 +43,8 @@ final class CompoundExpressionBuilder
      */
     public function build(): Query
     {
-        // For now, we'll build the expressions manually
-        // In a full implementation, you'd need to properly handle the compound expression building
-        // This is a simplified version for demonstration
-        return new Query($this->target);
+        // Since expressions are stored as a flat array with operators,
+        // we pass them directly to the Query constructor
+        return new Query(queries: $this->expressions);
     }
 }

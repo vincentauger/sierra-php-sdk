@@ -9,6 +9,9 @@ namespace VincentAuger\SierraSdk\Data\Query;
  */
 final readonly class Query
 {
+    /**
+     * @param  array<Query|string>|null  $queries
+     */
     public function __construct(
         public ?Target $target = null,
         public ?Expression $expr = null,
@@ -32,15 +35,16 @@ final readonly class Query
                     $queries[] = $item; // AND/OR operator
                 }
             }
+
             return ['queries' => $queries];
         }
 
         // Simple query
         $result = [];
-        if ($this->target !== null) {
+        if ($this->target instanceof \VincentAuger\SierraSdk\Data\Query\Target) {
             $result['target'] = $this->target->toArray();
         }
-        if ($this->expr !== null) {
+        if ($this->expr instanceof \VincentAuger\SierraSdk\Data\Query\Expression) {
             $result['expr'] = $this->expr->toArray();
         }
 

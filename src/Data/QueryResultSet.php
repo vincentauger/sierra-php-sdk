@@ -51,7 +51,7 @@ final readonly class QueryResultSet
         return [
             'total' => $this->total,
             'start' => $this->start,
-            'entries' => array_map(fn (QueryEntry $entry) => $entry->toArray(), $this->entries),
+            'entries' => array_map(fn (QueryEntry $entry): array => $entry->toArray(), $this->entries),
         ];
     }
 }

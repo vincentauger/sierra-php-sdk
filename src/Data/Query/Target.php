@@ -29,7 +29,7 @@ final readonly class Target
             $result['id'] = $this->id;
         }
 
-        if ($this->field !== null) {
+        if ($this->field instanceof \VincentAuger\SierraSdk\Data\Query\Field) {
             $result['field'] = $this->field->toArray();
         }
 

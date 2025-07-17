@@ -50,9 +50,11 @@ final class PostQueryBib extends Request
         return $query;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function defaultBody(): array
     {
         return $this->searchQuery->toArray();
     }
-
 }

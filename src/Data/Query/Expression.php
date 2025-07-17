@@ -9,6 +9,10 @@ namespace VincentAuger\SierraSdk\Data\Query;
  */
 final readonly class Expression
 {
+    /**
+     * @param  array<string>|null  $operands
+     * @param  array<Expression|string>|null  $expressions
+     */
     public function __construct(
         public ?string $op = null,
         public ?array $operands = null,
@@ -23,7 +27,7 @@ final readonly class Expression
     public function toArray(): array
     {
         if ($this->expressions !== null) {
-            // Compound expression
+            // Compound expression - return with queries key
             $expressions = [];
             foreach ($this->expressions as $item) {
                 if ($item instanceof self) {
@@ -32,7 +36,8 @@ final readonly class Expression
                     $expressions[] = $item; // AND/OR operator
                 }
             }
-            return $expressions;
+
+            return ['queries' => $expressions];
         }
 
         // Simple expression
