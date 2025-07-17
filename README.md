@@ -144,6 +144,8 @@ Contributions are welcome! Please open a pull request with tests and documentati
 
 3. **Set up environment (optional, for testing against real API)**
 
+By default, the test will use the existing fixtures.
+
    ```bash
    cp .env.example .env
    # Edit .env with your Sierra API credentials

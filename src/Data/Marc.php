@@ -87,6 +87,11 @@ final readonly class Marc
     {
         $fields = $this->getFieldsByTag($tag);
 
-        return $fields[0] ?? null;
+        $first = array_key_first($fields);
+        if ($first === null) {
+            return null;
+        }
+
+        return $fields[$first];
     }
 }

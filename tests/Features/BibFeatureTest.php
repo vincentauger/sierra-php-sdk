@@ -226,8 +226,7 @@ it('can query the bibs endpoint with a MARC field query', function (): void {
     expect($response->status())->toBe(200);
 
     expect($bibDto->marc->getFieldsByTag('024'))->toBeArray()->toHaveCount(1);
-    $fields024 = $bibDto->marc->getFieldsByTag('024');
-    $field024 = $fields024 !== [] ? $fields024[array_key_first($fields024)] : null;
+    $field024 = $bibDto->marc->getFirstFieldByTag('024');
     expect($field024->getSubfieldDataByCode('a'))->toBe('https://doi.org/10.60825/dmzw-we44');
 
 });
