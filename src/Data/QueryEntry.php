@@ -16,6 +16,17 @@ final readonly class QueryEntry
     ) {}
 
     /**
+     * Get the record ID from the link
+     */
+    public function getId(): int
+    {
+        // Extract the ID from the link
+        $parts = explode('/', $this->link);
+
+        return (int) end($parts); // Return the last part as the ID
+    }
+
+    /**
      * Create a QueryEntry from Sierra API response data
      *
      * @param  array<string, mixed>  $data

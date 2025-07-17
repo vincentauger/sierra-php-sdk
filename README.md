@@ -28,9 +28,9 @@ composer require vincentauger/sierra-sdk
 ### Initialize the client
 
 ```php
-use VincentAuger\SierraSdk\Client;
+use VincentAuger\SierraSdk\Sierra;
 
-$client = new Client(
+$sierra = new Sierra(
     baseUrl: 'https://your.sierra.server/iii/sierra-api/v6',
     clientKey: 'your_client_key',
     clientSecret: 'your_client_secret',
@@ -40,19 +40,55 @@ $client = new Client(
 ### Fetch a bibliographic record
 
 ```php
-$record = $client->getBibRecord(123456);
+use VincentAuger\SierraSdk\Requests\Bib\GetBib;
 
-echo $record->title;     // Access via typed DTO
-echo $record->recordType;
+$request = new GetBib(123456);
+$response = $sierra->send($request);
+$record = $request->createDtoFromResponse($response);
+
+echo $record->title;        // Access via typed DTO
+echo $record->author;
+echo $record->materialType?->getDisplayValue();
 ```
 
 ### Search the bibliographic index
 
 ```php
-$results = $client->searchBibIndex('title="climate change"');
+use VincentAuger\SierraSdk\Requests\Bib\GetSearchBib;
 
-foreach ($results->records as $bib) {
-    echo $bib->id . ': ' . $bib->title . PHP_EOL;
+$request = new GetSearchBib('climate change');
+$response = $sierra->send($request);
+$results = $request->createDtoFromResponse($response);
+
+foreach ($results->entries as $entry) {
+    echo $entry->bib->id . ': ' . $entry->bib->title . PHP_EOL;
+}
+```
+
+### Advanced querying with QueryFactory
+
+For detailed query examples and advanced usage, see the [Query Factory documentation](docs/QUERY_FACTORY.md).
+
+```php
+use VincentAuger\SierraSdk\Data\Query\QueryFactory;
+use VincentAuger\SierraSdk\Requests\Bib\PostQueryBib;
+
+// Search for titles starting with "climate"
+$query = QueryFactory::bib()
+    ->field('t')  // title field
+    ->startsWith('climate');
+
+$request = new PostQueryBib($query, limit: 25);
+$response = $sierra->send($request);
+$results = $request->createDtoFromResponse($response);
+
+foreach ($results->entries as $bibId) {
+    // Get full record details
+    $bibRequest = new GetBib($bibId);
+    $bibResponse = $sierra->send($bibRequest);
+    $bib = $bibRequest->createDtoFromResponse($bibResponse);
+
+    echo $bib->title . PHP_EOL;
 }
 ```
 
@@ -68,18 +104,17 @@ You must provide:
 
 ## Structure
 
-- **Client** – main entry point, wraps Saloon connector
-- **Requests** – one Saloon Request per endpoint (e.g., GetBibRecordRequest)
-- **Data** – Data DTOs for API responses
-- **Exceptions** – custom exceptions for API and response errors
-- **Tests** – PHPUnit test coverage (coming soon)
+- **Sierra** – main entry point, wraps Saloon connector
+- **Requests** – one Saloon Request per endpoint (e.g., GetBib, GetSearchBib, PostQueryBib)
+- **Data** – Data DTOs for API responses (e.g., BibObject, BibResultSet, BibSearchResultSet)
+- **Tests** – Pest tests
 
 ## Roadmap
 
 - [x] Basic client and authentication
 - [x] Query the bib records `GET /v6/bibs/`
 - [x] Search the bib records `GET /v6/bibs/search`
-- [ ] Query the bib records with JSON `POST /v6/bibs/search`
+- [x] Query the bib records with JSON `POST /v6/bibs/search`
 - [x] Fetch single bib record `GET /v6/bibs/{id}`
 
 ## Requirements
@@ -91,6 +126,55 @@ You must provide:
 ## Contributing
 
 Contributions are welcome! Please open a pull request with tests and documentation.
+
+### Development Setup
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/vincentauger/sierra-php-sdk.git
+   cd sierra-php-sdk
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   composer install
+   ```
+
+3. **Set up environment (optional, for testing against real API)**
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Sierra API credentials
+   ```
+
+### Running Tests
+
+The project uses several tools to ensure code quality:
+
+```bash
+# Run all tests and checks
+composer test
+
+# Individual tools
+composer test:unit      # Pest unit tests
+composer test:lint      # Laravel Pint code style check
+composer test:types     # PHPStan static analysis
+composer test:refactor  # Rector refactoring checks
+
+# Fix code style issues
+composer lint           # Apply Laravel Pint fixes
+composer refactor       # Apply Rector refactoring
+```
+
+### Development Guidelines
+
+- Follow PSR-12 coding standards (enforced by Laravel Pint)
+- Add tests for new features using Pest
+- Ensure PHPStan passes at level 9
+- All public methods should have proper type hints and DocBlocks
+
 Feel free to open issues for questions or feedback.
 
 ## License

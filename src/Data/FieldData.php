@@ -11,8 +11,10 @@ namespace VincentAuger\SierraSdk\Data;
  */
 final readonly class FieldData
 {
+    /**
+     * @param  array<int, MarcSubField>  $subfields
+     */
     public function __construct(
-        /** @var array<MarcSubField> */
         public array $subfields,
         public string $ind1,
         public string $ind2,

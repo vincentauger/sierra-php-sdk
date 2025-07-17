@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace VincentAuger\SierraSdk\Requests\Bib;
 
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
+use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Traits\Request\CreatesDtoFromResponse;
 use VincentAuger\SierraSdk\Data\Query\Query;
 use VincentAuger\SierraSdk\Data\QueryResultSet;
 
-final class PostQueryBib extends Request
+final class PostQueryBib extends Request implements HasBody
 {
     use CreatesDtoFromResponse;
+    use HasJsonBody;
 
     protected Method $method = Method::POST;
 
     public function __construct(
         public Query $searchQuery,
-        public ?int $limit = null,
-        public ?int $offset = null,
+        public ?int $limit = 10,
+        public ?int $offset = 0,
     ) {}
 
     public function resolveEndpoint(): string
@@ -37,17 +40,7 @@ final class PostQueryBib extends Request
 
     public function defaultQuery(): array
     {
-        $query = [];
-
-        if ($this->limit !== null) {
-            $query['limit'] = $this->limit;
-        }
-
-        if ($this->offset !== null) {
-            $query['offset'] = $this->offset;
-        }
-
-        return $query;
+        return ['limit' => $this->limit, 'offset' => $this->offset];
     }
 
     /**

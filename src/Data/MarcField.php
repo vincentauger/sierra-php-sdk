@@ -88,4 +88,20 @@ final readonly class MarcField
     {
         return ! $this->isControlField();
     }
+
+    public function getSubfieldDataByCode(string $code): ?string
+    {
+        if (! $this->data instanceof \VincentAuger\SierraSdk\Data\FieldData || ! $this->isDataField()) {
+            return null; // Not a data field or no data
+        }
+
+        // loook for code in subfields
+        foreach ($this->data->subfields as $subfield) {
+            if ($subfield->code === $code) {
+                return $subfield->data; // Return the value of the subfield
+            }
+        }
+
+        return null; // Subfield not found
+    }
 }

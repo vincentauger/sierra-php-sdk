@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Thu, 17 Jul 2025 17:06:59 GMT",
+        "Server": "Apache",
+        "Content-Type": "application\/json;charset=UTF-8",
+        "Content-Length": "565",
+        "Vary": "Accept-Encoding,User-Agent",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": [
+            "jcontainerId=.jcontainer-public2; path=\/iii\/sierra-api",
+            "jcontainerId=.jcontainer-public2; path=\/iii\/webrpt",
+            "jcontainerId=.jcontainer-public2; path=\/sierra\/admin",
+            "jcontainerId=.jcontainer-public2; path=\/iii\/ws\/extlink",
+            "jcontainerId=.jcontainer-public2; path=\/sierra\/ws\/summit"
+        ],
+        "Strict-Transport-Security": "max-age=31536000",
+        "Content-Security-Policy": [
+            "default-src 'self' https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca cat.fsl-bsf.scitech.gc.ca; script-src 'unsafe-inline' 'unsafe-eval' 'self' https:\/\/google.com https:\/\/*.google.com https:\/\/maps.googleapis.com https:\/\/ebscohost.com https:\/\/*.ebscohost.com https:\/\/cdn.appdynamics.com https:\/\/prototypejs.org https:\/\/o.aolcdn.com https:\/\/s7.addthis.com https:\/\/www.gstatic.com https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca https:\/\/www.googletagmanager.com https:\/\/ca.libraryh3lp.com; connect-src 'self' https:\/\/col.eum-appdynamics.com https:\/\/science-libraries.canada.ca https:\/\/bibliotheques-scientifiques.canada.ca https:\/\/fsl-bsf.scitech.gc.ca https:\/\/www.google-analytics.com;  upgrade-insecure-requests; block-all-mixed-content; style-src 'unsafe-inline' https:; img-src https: blob: data:; media-src https: blob: data:; font-src https: data:; object-src 'none';",
+            "frame-ancestors 'self' ;"
+        ]
+    },
+    "data": "{\"total\":7,\"start\":0,\"entries\":[{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4033640\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4054351\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4054971\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4055241\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4060231\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4102724\"},{\"link\":\"https:\/\/cat.fsl-bsf.scitech.gc.ca\/iii\/sierra-api\/v6\/bibs\/4124627\"}]}",
+    "context": []
+}
