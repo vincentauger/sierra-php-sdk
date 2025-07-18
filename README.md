@@ -125,59 +125,7 @@ You must provide:
 
 ## Contributing
 
-Contributions are welcome! Please open a pull request with tests and documentation.
-
-### Development Setup
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/vincentauger/sierra-php-sdk.git
-   cd sierra-php-sdk
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   composer install
-   ```
-
-3. **Set up environment (optional, for testing against real API)**
-
-By default, the test will use the existing fixtures.
-
-   ```bash
-   cp .env.example .env
-   # Edit .env with your Sierra API credentials
-   ```
-
-### Running Tests
-
-The project uses several tools to ensure code quality:
-
-```bash
-# Run all tests and checks
-composer test
-
-# Individual tools
-composer test:unit      # Pest unit tests
-composer test:lint      # Laravel Pint code style check
-composer test:types     # PHPStan static analysis
-composer test:refactor  # Rector refactoring checks
-
-# Fix code style issues
-composer lint           # Apply Laravel Pint fixes
-composer refactor       # Apply Rector refactoring
-```
-
-### Development Guidelines
-
-- Follow PSR-12 coding standards (enforced by Laravel Pint)
-- Add tests for new features using Pest
-- Ensure PHPStan passes at level 9
-- All public methods should have proper type hints and DocBlocks
-
-Feel free to open issues for questions or feedback.
+Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details on development setup, testing, and guidelines.
 
 ## License
 
