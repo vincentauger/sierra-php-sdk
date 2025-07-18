@@ -114,7 +114,7 @@ You must provide:
 - [x] Basic client and authentication
 - [x] Query the bib records `GET /v6/bibs/`
 - [x] Search the bib records `GET /v6/bibs/search`
-- [x] Query the bib records with JSON `POST /v6/bibs/search`
+- [x] Query the bib records with JSON `POST /v6/bibs/query`
 - [x] Fetch single bib record `GET /v6/bibs/{id}`
 
 ## Requirements
