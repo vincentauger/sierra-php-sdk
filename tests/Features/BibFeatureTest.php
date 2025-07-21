@@ -231,4 +231,7 @@ it('can query the bibs endpoint with a MARC field query', function (): void {
 
     $field650 = $bibDto->marc->getFieldsByTag('650');
     expect($field650)->toBeArray()->toHaveCount(6);
+
+    $frenchSubjects = $bibDto->marc->getTopicalTerms(secondIndicator: 6);
+    expect($frenchSubjects)->toBeArray()->toHaveCount(3);
 });

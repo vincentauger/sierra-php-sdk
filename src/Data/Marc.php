@@ -94,4 +94,46 @@ final readonly class Marc
 
         return $fields[$first];
     }
+
+    /**
+     * Get the list of Topical Terms (650 fields)
+     *
+     * First Indicator:
+     * null: no information provided
+     * 0: No level specified
+     * 1: Primary
+     * 2: Secondary
+     *
+     * Second Indicator:
+     * 0 - Library of Congress Subject Headings
+     * 1 - Library of Congress Children's and Young Adults' Subject Headings
+     * 2 - Medical Subject Headings
+     * 3 - National Agricultural Library subject authority file
+     * 4 - Source not specified
+     * 5 - Canadian Subject Headings
+     * 6 - Répertoire de vedettes-matière
+     * 7 - Source specified in subfield $2
+     *
+     * @return array<MarcField>
+     */
+    public function getTopicalTerms(?int $firstIndicator = null, ?int $secondIndicator = null): array
+    {
+
+        return array_filter($this->fields, function (MarcField $field) use ($firstIndicator, $secondIndicator): bool {
+            if ($field->tag !== '650') {
+                return false;
+            }
+
+            if ($firstIndicator !== null && $field->data->ind1 !== (string) $firstIndicator) {
+                return false;
+            }
+
+            if ($secondIndicator !== null && $field->data->ind2 !== (string) $secondIndicator) {
+                return false;
+            }
+
+            return true;
+        });
+
+    }
 }
