@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Comprehensive test suite with Pest
 - PSR-4 autoloading and PSR-12 coding standards
 
-## 1.1.0 - 2025-08-01
+## 1.1.0 - 2025-07-21
 
 ### Added
 
