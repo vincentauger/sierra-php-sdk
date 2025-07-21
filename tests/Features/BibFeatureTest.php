@@ -24,7 +24,7 @@ it('can get a token from the API', function (): void {
     expect($authenticator->getAccessToken())->toBeString();
     expect($authenticator->getExpiresAt())->toBeInstanceOf(DateTimeImmutable::class);
     expect($authenticator->hasExpired())->toBeFalse();
-})->skip(false, 'This test hits the real API and requires valid credentials.');
+})->skip(true, 'This test hits the real API and requires valid credentials.');
 
 it('can get a list of bibs', function (): void {
 
