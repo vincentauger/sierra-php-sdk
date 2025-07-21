@@ -16,3 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - QueryFactory for advanced search queries
 - Comprehensive test suite with Pest
 - PSR-4 autoloading and PSR-12 coding standards
+
+## 1.1.0 - 2025-08-01
+
+### Added
+
+- Helper function to easily extract subject fields from Marc DTO.
