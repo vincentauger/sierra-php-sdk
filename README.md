@@ -6,6 +6,8 @@ A modern PHP SDK for the Sierra ILS API (v6) platform, built for maintainability
 
 For detailed information on the Sierra API, visit the [docs](https://techdocs.iii.com/sierraapi/Content/titlePage.htm)
 
+[![Tests](https://github.com/vincentauger/sierra-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/vincentauger/sierra-php-sdk/actions/workflows/tests.yml)
+
 ---
 
 ## Features
