@@ -52,4 +52,13 @@ final class Sierra extends Connector
         return $config;
 
     }
+
+    protected function defaultHeaders(): array
+    {
+        return [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'User-Agent' => 'Sierra-PHP-SDK PHP/'.PHP_VERSION,
+        ];
+    }
 }
