@@ -82,13 +82,13 @@ final readonly class BibObject
             catalogDate: $data['catalogDate'] ?? null,
             country: isset($data['country']) ? Country::fromArray($data['country']) : null,
             orders: isset($data['orders']) ? array_map(
-                fn (array $order): OrderInfo => OrderInfo::fromArray($order),
+                OrderInfo::fromArray(...),
                 $data['orders']
             ) : null,
             normTitle: $data['normTitle'] ?? null,
             normAuthor: $data['normAuthor'] ?? null,
             locations: isset($data['locations']) ? array_map(
-                fn (array $location): Location => Location::fromArray($location),
+                Location::fromArray(...),
                 $data['locations']
             ) : null,
             holdCount: $data['holdCount'] ?? null,
@@ -97,11 +97,11 @@ final readonly class BibObject
             volumes: $data['volumes'] ?? null,
             items: $data['items'] ?? null,
             fixedFields: isset($data['fixedFields']) ? array_map(
-                fn (array $fixedField): FixedField => FixedField::fromArray($fixedField),
+                FixedField::fromArray(...),
                 $data['fixedFields']
             ) : null,
             varFields: isset($data['varFields']) ? array_map(
-                fn (array $varField): VarField => VarField::fromArray($varField),
+                VarField::fromArray(...),
                 $data['varFields']
             ) : null,
         );

@@ -35,7 +35,7 @@ final readonly class VarField
             ind2: $data['ind2'] ?? null,
             content: $data['content'] ?? null,
             subfields: isset($data['subfields']) ? array_map(
-                fn (array $subfield): \VincentAuger\SierraSdk\Data\Subfield => Subfield::fromArray($subfield),
+                Subfield::fromArray(...),
                 $data['subfields']
             ) : null,
         );

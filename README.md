@@ -22,7 +22,7 @@ For detailed information on the Sierra API, visit the [docs](https://techdocs.ii
 ## Installation
 
 ```bash
-composer require vincentauger/sierra-sdk
+composer require vincentauger/sierra-php-sdk
 ```
 
 ## Usage
