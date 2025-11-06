@@ -1,0 +1,31 @@
+{
+  "title": "Sierra PHP SDK",
+  "description": "A modern PHP SDK for the Sierra ILS API (v6) platform. Built with Saloon for maintainable HTTP integration, this SDK provides type-safe access to Sierra's Bibliographic API with a focus on read-only operations.",
+  "license": "MIT",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Auger, Vincent",
+      "orcid": "0000-0002-0595-6576"
+    }
+  ],
+  "keywords": [
+    "php",
+    "sierra",
+    "api",
+    "ils",
+    "integrated-library-system",
+    "bibliography",
+    "bibliographic-data",
+    "library-systems",
+    "sdk"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/vincentauger/sierra-php-sdk",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "language": "eng"
+}
